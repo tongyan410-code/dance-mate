@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+*.log
+
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
+
+# Local databases and runtime data
+*.sqlite3
+*.db
+miniprogram-full/server/data/*
+!miniprogram-full/server/data/sample_course.json
+miniprogram-full/server/storage/uploads/*
+!miniprogram-full/server/storage/uploads/.gitkeep
+miniprogram-full/server/storage/results/*
+!miniprogram-full/server/storage/results/.gitkeep
+miniprogram-full/server/models/*.task
+
+# JavaScript / build output
+node_modules/
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
