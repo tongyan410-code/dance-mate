@@ -1,0 +1,6 @@
+{
+  "desc": "舞伴智练小程序页面收录配置",
+  "rules": [
+    { "action": "disallow", "page": "*" }
+  ]
+}

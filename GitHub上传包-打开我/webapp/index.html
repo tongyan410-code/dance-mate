@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="舞伴智练 - 浏览器本地 AI 舞蹈动作对照，视频不上传，隐私更安全">
+<title>舞伴智练 · AI 舞蹈学习</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- 顶部 -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon">🩰</span>
+      <div>
+        <div class="brand-name">舞伴智练</div>
+        <div class="brand-sub">AI 让动作更清楚</div>
+      </div>
+    </div>
+    <div id="modelStatus" class="model-status loading">
+      <span class="dot"></span><span id="modelStatusText">正在加载 AI 模型…</span>
+    </div>
+  </header>
+
+  <!-- 加载遮罩 -->
+  <div id="bootScreen" class="boot-screen">
+    <div class="boot-card">
+      <div class="boot-icon">🩰</div>
+      <h1>舞伴智练</h1>
+      <p class="boot-desc">AI 动作识别 · 视频不上传 · 手机就能用</p>
+      <div class="boot-progress">
+        <div id="bootBar" class="boot-bar"></div>
+      </div>
+      <p id="bootMsg" class="boot-msg">正在准备 AI 模型，首次打开需要几秒…</p>
+      <div class="boot-actions">
+        <button id="bootRetry" class="btn btn-primary" style="display:none" onclick="location.reload()">重新加载</button>
+        <button id="bootSkip" class="btn btn-ghost" style="display:none;margin-left:8px" onclick="document.getElementById('bootScreen').style.display='none';document.getElementById('main').style.display='block';document.getElementById('tabbar').style.display='flex'">先看看界面</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主内容 -->
+  <main class="main" id="main" style="display:none">
+
+    <!-- 首页 -->
+    <section id="page-home" class="page active">
+      <div class="hero-card">
+        <h2>你好，欢迎来练习</h2>
+        <p>在这里，你可以看老师示范、录下自己的动作，让 AI 帮你把两个视频摆在一起对照。所有识别都在你的手机里完成，视频不会上传到任何地方。</p>
+      </div>
+
+      <div class="notice">
+        <strong>怎么玩？</strong> 先上传一段老师示范视频，再录一段自己的练习，最后点「动作对照」就能并排看。
+      </div>
+
+      <div class="quick-grid">
+        <button class="quick-card" onclick="go('reference')">
+          <div class="quick-icon">📹</div>
+          <div class="quick-title">老师示范</div>
+          <div class="quick-desc">上传标准视频</div>
+        </button>
+        <button class="quick-card" onclick="go('practice')">
+          <div class="quick-icon">🎬</div>
+          <div class="quick-title">我的练习</div>
+          <div class="quick-desc">录下自己的动作</div>
+        </button>
+        <button class="quick-card" onclick="go('compare')">
+          <div class="quick-icon">🔍</div>
+          <div class="quick-title">动作对照</div>
+          <div class="quick-desc">并排看差异</div>
+        </button>
+        <button class="quick-card" onclick="go('chat')">
+          <div class="quick-icon">💬</div>
+          <div class="quick-title">AI 陪伴</div>
+          <div class="quick-desc">练舞问答 · 不联网</div>
+        </button>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title">拍摄小提示</h3>
+        <ul class="tips-list">
+          <li>手机固定好，不要跟拍，全身和双脚都要拍进去</li>
+          <li>光线均匀、背景简单，避免遮挡</li>
+          <li>老师和你的视频，尽量用同样的方向和机位</li>
+          <li>每段 10—30 秒，MP4 格式最好</li>
+        </ul>
+      </div>
+
+      <div class="card disclaimer">
+        <h3 class="card-title">关于结果</h3>
+        <p>AI 给出的是人体关键点，是算法估计，不是精密动作捕捉，也不是舞蹈评分。动作名称、方向和标准，请以老师讲解为准。如有疼痛不适请停止练习。</p>
+        <p class="hint">两段视频都由你自己上传（一段老师示范、一段你的练习）。本网页没有教师端、没有账号，也没有审核流程；AI 只报「哪儿不一样、差多少」，不判定动作是否标准，也不给「手抬高一点」这类动作改法。</p>
+      </div>
+    </section>
+
+    <!-- 老师示范 -->
+    <section id="page-reference" class="page">
+      <h2 class="page-title">老师示范视频</h2>
+      <p class="page-sub">上传你自己保存的老师示范视频，AI 会在你的手机里提取骨架。视频由你提供，本网页不审核、也不判定它是否标准。</p>
+      <div class="card">
+        <label class="upload-box" for="refFile">
+          <input type="file" id="refFile" accept="video/*" hidden>
+          <div class="upload-icon">📁</div>
+          <div class="upload-title">点击选择视频</div>
+          <div class="upload-desc">支持 MP4 / MOV，建议 10—30 秒</div>
+        </label>
+      </div>
+      <div id="refResult" class="result-area" style="display:none">
+        <div class="card video-card">
+          <div class="video-label">老师示范 · 骨架预览</div>
+          <div class="video-wrap">
+            <video id="refVideo" playsinline muted controls></video>
+            <canvas id="refCanvas" class="overlay-canvas"></canvas>
+          </div>
+          <div id="refInfo" class="video-info"></div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="playWithSkeleton('ref')">▶ 播放看骨架</button>
+            <button class="btn btn-ghost" onclick="clearVideo('ref')">重新选择</button>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="go('compare')">下一步：去动作对照 →</button>
+      </div>
+    </section>
+
+    <!-- 我的练习 -->
+    <section id="page-practice" class="page">
+      <h2 class="page-title">我的练习视频</h2>
+      <p class="page-sub">录下自己的动作，或从相册选一段视频。</p>
+      <div class="card">
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="startRecord()">📷 现场录制</button>
+          <label class="btn btn-ghost label-btn" for="pracFile">📁 从相册选
+            <input type="file" id="pracFile" accept="video/*" hidden>
+          </label>
+        </div>
+        <p class="hint">录制时请确认画面里只有你一人、全身入镜。上传即表示你已知情同意用于本次学习分析。</p>
+      </div>
+
+      <div id="recordArea" class="card" style="display:none">
+        <div class="video-label">录制中</div>
+        <video id="liveVideo" playsinline muted autoplay></video>
+        <div class="btn-row">
+          <button id="recordBtn" class="btn btn-danger" onclick="toggleRecord()">● 开始录制</button>
+          <button class="btn btn-ghost" onclick="stopRecord()">完成</button>
+        </div>
+        <p id="recordHint" class="hint"></p>
+      </div>
+
+      <div id="pracResult" class="result-area" style="display:none">
+        <div class="card video-card">
+          <div class="video-label">我的练习 · 骨架预览</div>
+          <div class="video-wrap">
+            <video id="pracVideo" playsinline controls></video>
+            <canvas id="pracCanvas" class="overlay-canvas"></canvas>
+          </div>
+          <div id="pracInfo" class="video-info"></div>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="playWithSkeleton('prac')">▶ 播放看骨架</button>
+            <button class="btn btn-ghost" onclick="clearVideo('prac')">重新选择</button>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="go('compare')">下一步：去动作对照 →</button>
+      </div>
+    </section>
+
+    <!-- 动作对照 -->
+    <section id="page-compare" class="page">
+      <h2 class="page-title">动作对照</h2>
+      <p class="page-sub">左边老师，右边你。点播放，两边一起动。</p>
+      <div id="compareEmpty" class="card empty-card">
+        <div class="empty-icon">🔍</div>
+        <p>还没有对照内容</p>
+        <p class="text-sub">请先上传老师示范视频和你的练习视频。</p>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="go('reference')">上传老师示范</button>
+          <button class="btn btn-ghost" onclick="go('practice')">上传我的练习</button>
+        </div>
+      </div>
+      <div id="compareArea" style="display:none">
+        <div class="compare-grid">
+          <div class="compare-col">
+            <div class="video-label">老师示范</div>
+            <div class="video-wrap small">
+              <video id="cmpRefVideo" playsinline muted></video>
+              <canvas id="cmpRefCanvas" class="overlay-canvas"></canvas>
+            </div>
+          </div>
+          <div class="compare-col">
+            <div class="video-label">我的练习</div>
+            <div class="video-wrap small">
+              <video id="cmpPracVideo" playsinline muted></video>
+              <canvas id="cmpPracCanvas" class="overlay-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="playBoth()">▶ 一起播放</button>
+            <button class="btn btn-ghost" onclick="pauseBoth()">⏸ 暂停</button>
+            <button class="btn btn-ghost" onclick="replayBoth()">↺ 从头再看</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3 class="card-title">骨架关键帧</h3>
+          <div id="posterCompare" class="poster-compare"></div>
+          <p class="hint">点图片可放大。骨架是算法估计，用来辅助观察，不是评分。</p>
+        </div>
+        <div class="card notice soft">
+          <strong>怎么看：</strong>看手臂位置、身体方向、重心和时间点。下面的「AI 动作反馈」会在两段视频里各找出 33 个身体关键点，把同一时刻的动作对齐，再比出 <strong>手肘角度 · 重心位置 · 动作轨迹</strong> 的差异，逐条列给你。这些只是观察提示，不打分、不判定标准，标准动作以老师讲解为准。AI 不给动作改法，下面三条是让你自己复查的方法，具体怎么改听老师的。机位、镜像、遮挡、光线都会影响结果。
+        </div>
+        <div class="card">
+          <h3 class="card-title">AI 动作反馈</h3>
+          <p class="hint">AI 用骨架关键点算差异：手肘是「肩—肘—腕」的夹角，重心是髋部相对双脚的水平位置，动作偏差是全身主要关节逐帧的轨迹距离。下面这几行就是识别结果。</p>
+          <div id="feedbackBox" class="feedback-box">
+            <p class="text-sub">两段视频都上传并识别完成后，这里会逐条显示手肘角度、重心位置和动作时机的客观差异。</p>
+          </div>
+          <p class="hint">自己复查三步（不是动作改法）：</p>
+          <p class="hint">① 看差异最明显的那一行，慢放老师示范，盯住对应部位（手臂高度／支撑脚／起手时间）</p>
+          <p class="hint">② 一次只改一个部位，改完再录一遍对照，别一次全改</p>
+          <p class="hint">③ 动作名称、方向和标准以老师讲解为准；有疼痛或不适立刻停下</p>
+          <p class="hint">AI 只报客观差异，不生成「手抬高一点」「重心往左」这类教学指令；动作怎么改、改得对不对，都由老师判断。</p>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="go('chat')">问问 AI 下一步练什么 →</button>
+      </div>
+    </section>
+
+    <!-- AI 陪伴 -->
+    <section id="page-chat" class="page">
+      <h2 class="page-title">AI 陪伴</h2>
+      <p class="page-sub">动作、节奏、身体、舞种常识，或这个网页怎么用，都能问。回答来自本机内置知识库，不联网；答不上来会直说，并给你几个能点的方向。</p>
+      <div class="notice soft">AI 是学习伙伴，不冒充真人、不打分、不判标准，也不做医疗或心理判断；有些问题答不上来会直说。动作标准以老师为准。</div>
+      <div id="chatBox" class="chat-box">
+        <div class="msg assistant">来啦，我是陪你练舞的小助手。动作上的问题、或者今天单纯不太想练，都能跟我说。</div>
+      </div>
+      <div class="quick-q" id="quickQ">
+        <button class="chip" onclick="ask('动作总是记不住怎么办？')">动作记不住</button>
+        <button class="chip" onclick="ask('动作衔接怎么练？')">动作衔接</button>
+        <button class="chip" onclick="ask('重心要注意什么？')">重心问题</button>
+        <button class="chip" onclick="ask('节奏和音乐怎么配合？')">节奏配合</button>
+        <button class="chip" onclick="ask('练了半天没什么进步，有点泄气')">有点泄气</button>
+        <button class="chip" onclick="ask('最近太忙，没时间练怎么办？')">没时间练</button>
+        <button class="chip" onclick="ask('第一次上台，好紧张')">上台紧张</button>
+        <button class="chip" onclick="ask('你能回答些什么？')">能问什么</button>
+        <button class="chip" onclick="ask('视频会上传吗？')">隐私说明</button>
+        <button class="chip" onclick="ask('就是想随便聊两句')">随便聊聊</button>
+      </div>
+      <div class="chat-input-row">
+        <input id="chatInput" type="text" placeholder="说说你遇到的问题…" maxlength="300" onkeydown="if(event.key==='Enter')sendChat()">
+        <button class="btn btn-primary" onclick="sendChat()">发送</button>
+      </div>
+    </section>
+
+    <!-- 说明 -->
+    <section id="page-about" class="page">
+      <h2 class="page-title">使用说明</h2>
+      <div class="card">
+        <h3 class="card-title">三步用起来</h3>
+        <ol class="steps-list">
+          <li>在「老师示范」上传一段标准视频</li>
+          <li>在「我的练习」录一段或选一段自己的视频</li>
+          <li>在「动作对照」并排播放，看骨架和关键帧</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3 class="card-title">隐私与安全</h3>
+        <p>你的视频只在当前浏览器里处理，不会上传到服务器，也不会传给第三方。关闭页面后数据不会保留。录制他人影像前请先取得对方同意。</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">技术说明</h3>
+        <p>姿态识别使用 Google MediaPipe Pose Landmarker Lite，在浏览器本地运行。这是算法估计，不等于完整舞蹈理解，不输出标准度评分或排名。</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">当前试点版能做什么、不能做什么</h3>
+        <p>这是一个浏览器本地试点版：没有教师端、没有账号，也没有审核流程。老师示范视频和你的练习视频都由你自己上传，视频只在当前浏览器里处理，不上传服务器。</p>
+        <p>AI 只把两段视频的 33 个骨架关键点按时间对齐，报出手肘角度、重心位置、动作轨迹的客观差异，也就是「哪儿不一样、差多少」，再给你自己复查的方法。它不打分、不给标准度百分比、不判定动作是否标准，也不生成动作改法。</p>
+        <p>动作名称、方向、质量和「该怎么改」，都以老师讲解为准。教师端、动作拆解审核和课程制作属于完整平台规划，不在这个网页里。</p>
+      </div>
+      <div class="card disclaimer">
+        <p>舞伴智练 · 浏览器试点版。AI 辅助学习，专业判断请遵从你的老师。</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 底部导航 -->
+  <nav class="tabbar" id="tabbar" style="display:none">
+    <button class="tab active" data-page="home" onclick="go('home')"><span class="tab-icon">🏠</span><span>首页</span></button>
+    <button class="tab" data-page="reference" onclick="go('reference')"><span class="tab-icon">📹</span><span>示范</span></button>
+    <button class="tab" data-page="practice" onclick="go('practice')"><span class="tab-icon">🎬</span><span>练习</span></button>
+    <button class="tab" data-page="compare" onclick="go('compare')"><span class="tab-icon">🔍</span><span>对照</span></button>
+    <button class="tab" data-page="chat" onclick="go('chat')"><span class="tab-icon">💬</span><span>陪伴</span></button>
+  </nav>
+
+  <!-- 图片放大 -->
+  <div id="lightbox" class="lightbox" style="display:none" onclick="this.style.display='none'">
+    <img id="lightboxImg" src="">
+  </div>
+
+</div>
+<script src="./wasm/vision_wasm_internal.js" onerror="console.warn('local wasm js not found, will use CDN')"></script>
+<script>
+  // 兜底：8 秒还没进主界面，显示“先看看界面”，避免卡死在启动屏
+  setTimeout(function () {
+    var boot = document.getElementById('bootScreen');
+    if (boot && boot.style.display !== 'none') {
+      var msg = document.getElementById('bootMsg');
+      if (msg) msg.textContent = 'AI 模型加载较慢，可先进入界面看看';
+      var skip = document.getElementById('bootSkip');
+      if (skip) skip.style.display = 'inline-block';
+    }
+  }, 8000);
+</script>
+<script type="module" src="app.js"></script>
+</body>
+</html>

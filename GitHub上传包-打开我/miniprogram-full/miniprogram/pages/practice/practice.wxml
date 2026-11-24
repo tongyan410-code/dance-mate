@@ -1,0 +1,37 @@
+<view class="page">
+  <view class="card intro">
+    <view class="title-md">录一段，练一练</view>
+    <view class="text-sub">先去课程里选一个动作片段，录 10—30 秒练习视频。分析完成后点「查看对照」，就能并排看标准动作和自己的动作。</view>
+    <button class="btn go-btn" bindtap="goCourses">去课程里选片段</button>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty"><view class="text-sub">正在读取练习记录…</view></view>
+
+  <view wx:elif="{{records.length === 0}}" class="empty">
+    <view class="empty-icon">🎬</view>
+    <view class="text-sub">还没有练习记录</view>
+  </view>
+
+  <view wx:else>
+    <view class="title-md section-title">我的练习记录（{{records.length}}）</view>
+    <view wx:for="{{records}}" wx:key="id" class="card record">
+      <view class="between">
+        <view class="rec-title">{{item.courseTitle}}</view>
+        <view class="status {{item.statusClass}}">{{item.statusText}}</view>
+      </view>
+      <view class="text-sub rec-seg">动作：{{item.segmentTitle}}</view>
+      <view class="text-sub rec-time">{{item.timeText}}</view>
+
+      <view wx:if="{{item.status === 'failed'}}" class="rec-error">{{item.error || '分析失败，请检查视频是否清晰、全身入镜。'}}</view>
+
+      <view class="rec-actions">
+        <button class="btn small" bindtap="viewCompare" data-id="{{item.id}}" disabled="{{item.status !== 'succeeded'}}">查看对照</button>
+        <button class="btn small btn-outline" bindtap="removeRecord" data-id="{{item.id}}">删除</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="card note-card">
+    <view class="text-sub">说明：对照结果是辅助观察，不打分、不判定对错。动作是否标准，以教师的讲解为准。</view>
+  </view>
+</view>

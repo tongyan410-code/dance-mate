@@ -1,0 +1,31 @@
+<view class="page">
+  <view class="card stats">
+    <view class="stat">
+      <view class="stat-num">{{stats.total}}</view>
+      <view class="text-sub">上传过的练习</view>
+    </view>
+    <view class="stat">
+      <view class="stat-num">{{stats.done}}</view>
+      <view class="text-sub">可看对照</view>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty"><view class="text-sub">正在读取…</view></view>
+  <view wx:elif="{{records.length === 0}}" class="empty">
+    <view class="empty-icon">📖</view>
+    <view class="text-sub">还没有学习记录</view>
+  </view>
+
+  <view wx:for="{{records}}" wx:key="id" class="card record" bindtap="viewCompare" data-id="{{item.id}}">
+    <view class="between">
+      <view class="rec-title">{{item.courseTitle}}</view>
+      <view class="rec-status {{item.status === 'succeeded' ? 'ok' : 'wait'}}">{{item.statusText}}</view>
+    </view>
+    <view class="text-sub">动作：{{item.segmentTitle}}</view>
+    <view class="text-sub">{{item.timeText}}</view>
+  </view>
+
+  <view class="card note-card">
+    <view class="text-sub">记录保存在这台手机上。换手机后，旧的练习记录不会跟过来。</view>
+  </view>
+</view>

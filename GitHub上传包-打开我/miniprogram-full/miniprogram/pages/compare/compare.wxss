@@ -1,0 +1,12 @@
+.videos { display: flex; gap: 12rpx; }
+.video-col { flex: 1; min-width: 0; }
+.video-label { text-align: center; font-size: 28rpx; color: #2B6CB0; font-weight: 600; margin-bottom: 10rpx; }
+.video { width: 100%; height: 360rpx; background: #000; border-radius: 10rpx; }
+
+.posters { display: flex; gap: 12rpx; margin-top: 16rpx; }
+.posters .poster { width: calc(50% - 6rpx); border-radius: 8rpx; background: #ECEFF1; }
+.poster-labels { display: flex; gap: 12rpx; margin-top: 8rpx; }
+.poster-labels .text-sub { width: 50%; text-align: center; font-size: 24rpx; }
+
+.compare-note { margin-top: 12rpx; line-height: 1.8; }
+.go-chat { margin-top: 24rpx; width: 100%; }

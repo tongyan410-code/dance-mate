@@ -1,0 +1,13 @@
+services:
+  wuban-server:
+    build: .
+    container_name: wuban-server
+    restart: unless-stopped
+    ports:
+      - "8011:8011"
+    env_file:
+      - .env
+    volumes:
+      - ./storage:/app/storage
+      - ./data:/app/data
+      - ./models:/app/models

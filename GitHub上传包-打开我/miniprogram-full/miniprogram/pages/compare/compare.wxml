@@ -1,0 +1,56 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty"><view class="text-sub">正在准备对照…</view></view>
+  <view wx:elif="{{error}}" class="empty"><view class="empty-icon">⚠️</view><view class="text-sub">{{error}}</view></view>
+
+  <block wx:else>
+    <view class="card">
+      <view class="title-md">正在练习：{{comparison.segment_title}}</view>
+      <view class="text-sub">左边是教师示范，右边是你的练习。两边尽量用同样的机位和方向。</view>
+    </view>
+
+    <view class="card">
+      <view class="videos">
+        <view class="video-col">
+          <view class="video-label">教师示范</view>
+          <video
+            class="video"
+            src="{{refVideo}}"
+            poster="{{refPoster}}"
+            initial-time="{{startSec}}"
+            controls
+            show-fullscreen-btn
+          />
+        </view>
+        <view class="video-col">
+          <view class="video-label">我的练习</view>
+          <video
+            class="video"
+            src="{{pracVideo}}"
+            poster="{{pracPoster}}"
+            controls
+            show-fullscreen-btn
+          />
+        </view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="title-md">关键帧一览</view>
+      <view class="text-sub">点图片可以放大查看。</view>
+      <view class="posters">
+        <image class="poster" src="{{refPoster}}" mode="widthFix" bindtap="openPoster" data-url="{{refPoster}}" />
+        <image class="poster" src="{{pracPoster}}" mode="widthFix" bindtap="openPoster" data-url="{{pracPoster}}" />
+      </view>
+      <view class="poster-labels">
+        <view class="text-sub">教师示范</view>
+        <view class="text-sub">我的练习</view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="title-md">怎么看这段对照</view>
+      <view class="text-sub compare-note">{{comparison.note}}</view>
+      <button class="btn go-chat" bindtap="goChat">问问 AI 下一步练什么</button>
+    </view>
+  </block>
+</view>
