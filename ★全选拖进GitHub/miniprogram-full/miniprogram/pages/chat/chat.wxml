@@ -1,0 +1,34 @@
+<view class="chat-page">
+  <view class="notice chat-notice">AI 只做学习和兴趣上的陪伴提示，不冒充真人，也不做医疗或心理判断。</view>
+
+  <scroll-view class="chat" scroll-y scroll-into-view="{{lastId}}" enhanced show-scrollbar="{{false}}">
+    <view wx:for="{{messages}}" wx:key="index" id="msg-{{index}}" class="msg-row {{item.role}}">
+      <view class="bubble">{{item.content}}</view>
+    </view>
+    <view wx:if="{{sending}}" class="msg-row assistant">
+      <view class="bubble typing">AI 正在想…</view>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{messages.length === 1}}" class="quick">
+    <view class="text-sub">你可以试试问：</view>
+    <view class="quick-list">
+      <view wx:for="{{quick}}" wx:key="*this" class="quick-chip" bindtap="askQuick" data-q="{{item}}">{{item}}</view>
+    </view>
+  </view>
+
+  <view class="input-bar">
+    <input
+      class="input"
+      value="{{input}}"
+      bindinput="onInput"
+      bindconfirm="send"
+      placeholder="说说你练舞遇到的问题…"
+      confirm-type="send"
+      maxlength="500"
+    />
+    <button class="send-btn" bindtap="send" disabled="{{sending || !input}}">发送</button>
+  </view>
+
+  <view class="clear-wrap"><text class="clear" bindtap="clearChat">清空聊天</text></view>
+</view>

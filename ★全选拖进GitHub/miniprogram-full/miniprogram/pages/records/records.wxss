@@ -1,0 +1,9 @@
+.stats { display: flex; }
+.stat { flex: 1; text-align: center; }
+.stat-num { font-size: 52rpx; font-weight: 700; color: #2B6CB0; line-height: 1.2; }
+.record { padding: 24rpx 28rpx; }
+.rec-title { font-size: 32rpx; font-weight: 600; }
+.rec-status { font-size: 24rpx; padding: 6rpx 16rpx; border-radius: 999rpx; }
+.rec-status.ok { background: #E6F4EA; color: #2E7D54; }
+.rec-status.wait { background: #FFF4E5; color: #A05A00; }
+.note-card { margin-top: 16rpx; }

@@ -1,0 +1,31 @@
+<view class="page">
+  <view class="notice">
+    这里只显示教师已经审核发布的课程。没看到课程时，请让教师先用网页版建课并发布。
+  </view>
+
+  <view wx:if="{{loading}}" class="empty">
+    <view class="text-sub">正在加载课程…</view>
+  </view>
+
+  <view wx:elif="{{error}}" class="empty">
+    <view class="empty-icon">⚠️</view>
+    <view class="text-sub">{{error}}</view>
+  </view>
+
+  <view wx:elif="{{courses.length === 0}}" class="empty">
+    <view class="empty-icon">📭</view>
+    <view class="text-sub">暂无已发布课程</view>
+  </view>
+
+  <view wx:for="{{courses}}" wx:key="course_id" class="card course" bindtap="openCourse" data-id="{{item.course_id}}">
+    <view class="between">
+      <view class="title-md">{{item.title}}</view>
+      <view class="tag">已发布</view>
+    </view>
+    <view class="text-sub meta">{{item.dance_style}} · {{item.segments.length}} 个动作片段</view>
+    <view wx:if="{{item.segments.length > 0}}" class="segment-preview">
+      <text wx:for="{{item.segments}}" wx:for-item="seg" wx:key="segment_id" class="chip">{{seg.title}}</text>
+    </view>
+    <view class="arrow">查看详情 →</view>
+  </view>
+</view>

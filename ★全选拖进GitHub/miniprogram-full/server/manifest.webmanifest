@@ -1,0 +1,10 @@
+{
+  "name": "舞伴智练",
+  "short_name": "舞伴智练",
+  "description": "成人现代舞学习、AI视觉识别与智能陪练",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f7f6f1",
+  "theme_color": "#263e36",
+  "lang": "zh-CN"
+}

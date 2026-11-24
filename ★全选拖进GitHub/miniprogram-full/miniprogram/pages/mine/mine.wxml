@@ -1,0 +1,53 @@
+<view class="page">
+  <view class="card profile">
+    <view class="avatar">🙋</view>
+    <view>
+      <view class="title-md">{{alias || '还没设置昵称'}}</view>
+      <view class="text-sub">{{joined ? '已加入试点' : '点下面设置昵称后开始练习'}}</view>
+    </view>
+  </view>
+
+  <view class="card list">
+    <view class="item" bindtap="setIdentity">
+      <view class="item-left">
+        <view class="item-title">昵称与邀请码</view>
+        <view class="text-sub">第一次使用请先设置</view>
+      </view>
+      <view class="item-arrow">›</view>
+    </view>
+
+    <view class="item" bindtap="setServer">
+      <view class="item-left">
+        <view class="item-title">服务器设置</view>
+        <view class="text-sub server-url">{{server}}</view>
+      </view>
+      <view class="item-arrow">›</view>
+    </view>
+  </view>
+
+  <view class="title-md section-title">更多</view>
+  <view class="card list">
+    <view class="item" bindtap="goPage" data-url="/pages/chat/chat">
+      <view class="item-title">💬 AI 陪伴与问答</view>
+      <view class="item-arrow">›</view>
+    </view>
+    <view class="item" bindtap="goPage" data-url="/pages/records/records">
+      <view class="item-title">📖 学习记录</view>
+      <view class="item-arrow">›</view>
+    </view>
+    <view class="item" bindtap="showPrivacy">
+      <view class="item-title">🔒 隐私说明</view>
+      <view class="item-arrow">›</view>
+    </view>
+    <view class="item" bindtap="showHelp">
+      <view class="item-title">❓ 使用帮助</view>
+      <view class="item-arrow">›</view>
+    </view>
+    <view class="item" bindtap="clearLocal">
+      <view class="item-title danger">清除本机记录</view>
+      <view class="item-arrow">›</view>
+    </view>
+  </view>
+
+  <view class="text-sub version">舞伴智练 · 学员试点版</view>
+</view>

@@ -1,0 +1,45 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="empty"><view class="text-sub">正在加载…</view></view>
+  <view wx:elif="{{error}}" class="empty"><view class="empty-icon">⚠️</view><view class="text-sub">{{error}}</view></view>
+
+  <block wx:else>
+    <view class="card course-head">
+      <view class="title-lg">{{course.title}}</view>
+      <view class="text-sub">{{course.dance_style}} · {{segments.length}} 个动作片段</view>
+      <view class="notice inline">
+        每个片段都经过教师审核。点「练习这个片段」录一段自己的视频，就能看并排对照。
+      </view>
+    </view>
+
+    <view wx:for="{{segments}}" wx:key="segment_id" class="card segment">
+      <view class="between">
+        <view class="title-md">{{index + 1}}. {{item.title}}</view>
+        <view class="time-tag">{{item.timeText}}</view>
+      </view>
+
+      <image
+        wx:if="{{item.poster}}"
+        class="poster"
+        src="{{item.poster}}"
+        mode="widthFix"
+        bindtap="openPoster"
+        data-url="{{item.poster}}"
+      />
+
+      <view wx:if="{{item.teacher_notes}}" class="notes">
+        <view class="notes-label">教师讲解</view>
+        <view class="notes-body">{{item.teacher_notes}}</view>
+      </view>
+      <view wx:else class="text-sub notes-empty">这个片段还没有文字讲解。</view>
+
+      <button class="btn practice-btn" bindtap="startPractice" data-seg="{{item}}" disabled="{{uploading}}">
+        练习这个片段
+      </button>
+    </view>
+
+    <view wx:if="{{segments.length === 0}}" class="empty">
+      <view class="empty-icon">📭</view>
+      <view class="text-sub">这门课还没有已审核的动作片段。</view>
+    </view>
+  </block>
+</view>

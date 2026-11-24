@@ -1,0 +1,18 @@
+.course { position: relative; }
+.tag {
+  background: #E6F4EA;
+  color: #2E7D54;
+  font-size: 24rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 999rpx;
+}
+.meta { margin-top: 10rpx; }
+.segment-preview { margin-top: 16rpx; display: flex; flex-wrap: wrap; gap: 12rpx; }
+.chip {
+  background: #EEF4FA;
+  color: #2B6CB0;
+  font-size: 24rpx;
+  padding: 6rpx 14rpx;
+  border-radius: 8rpx;
+}
+.arrow { margin-top: 20rpx; color: #2B6CB0; font-size: 28rpx; text-align: right; }

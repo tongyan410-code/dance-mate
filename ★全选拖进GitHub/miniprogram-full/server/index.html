@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#7651B7"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="description" content="舞伴智练：面向社区中老年舞蹈爱好者的 AI 学习与服务连接器。AI动作指导、情感陪伴与高校—社区资源连接。"><title>舞伴智练｜AI学习与服务连接器</title>
+<style>
+:root{--ink:#33284a;--muted:#756b87;--green:#7651b7;--green2:#f0e9fb;--cream:#fbf8ff;--line:#e9e1f3;--gold:#9a75c7;--white:#fff;--shadow:0 12px 34px rgba(89,58,132,.09)}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer}.shell{max-width:1180px;margin:auto;padding:22px 24px 50px}
+header{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:15px;background:var(--green);color:#f5e8cc;display:grid;place-items:center;font-size:22px}.brand b{font-size:19px;letter-spacing:.04em}.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:.12em}
+.pill{border:1px solid #d8e1d9;border-radius:99px;padding:7px 12px;color:var(--green);font-size:12px;background:#fff}
+.hero{background:linear-gradient(120deg,#62429f,#8c68c5);border-radius:24px;padding:30px 34px;color:#fff;display:grid;grid-template-columns:1.4fr .8fr;gap:20px;overflow:hidden;position:relative;box-shadow:var(--shadow)}
+.hero:after{content:"";position:absolute;width:280px;height:280px;border:1px solid rgba(255,255,255,.12);border-radius:50%;right:-35px;top:-95px;box-shadow:0 0 0 35px rgba(255,255,255,.035),0 0 0 75px rgba(255,255,255,.025)}
+.eyebrow{color:#eadfff;font-size:12px;letter-spacing:.18em}.hero h1{font-size:clamp(27px,4vw,43px);line-height:1.2;margin:10px 0}.hero p{color:#e0e9e2;max-width:620px;margin:0}.hero-side{align-self:center;z-index:1;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);padding:17px;border-radius:18px}
+.hero-side strong{font-size:26px;display:block}.hero-side span{color:#d9e3dc;font-size:12px}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0}.nav button{border:1px solid var(--line);background:#fff;color:var(--muted);padding:10px 15px;border-radius:12px}.nav button.active{background:var(--green);border-color:var(--green);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 4px 18px rgba(35,55,45,.035)}.span-8{grid-column:span 8}.span-7{grid-column:span 7}.span-6{grid-column:span 6}.span-5{grid-column:span 5}.span-4{grid-column:span 4}.span-12{grid-column:span 12}
+h2{font-size:20px;margin:0 0 5px}h3{font-size:15px;margin:0 0 8px}.muted{color:var(--muted)}.small{font-size:12px;color:var(--muted)}.kicker{font-size:11px;color:var(--gold);letter-spacing:.14em;font-weight:700}
+.feature{display:flex;gap:13px;align-items:flex-start}.ico{width:40px;height:40px;flex:none;border-radius:13px;background:var(--green2);display:grid;place-items:center;font-size:20px}
+.btn{border:0;border-radius:11px;padding:10px 15px;background:var(--green);color:white;font-weight:600}.btn.secondary{background:#edf2ee;color:var(--green)}.btn.ghost{background:white;border:1px solid var(--line);color:var(--ink)}.btn.gold{background:#f3eadb;color:#79582e}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.statrow{display:flex;gap:12px;flex-wrap:wrap}.stat{flex:1;min-width:100px;background:#f7f8f5;padding:12px;border-radius:13px}.stat b{display:block;font-size:22px}.stat span{font-size:11px;color:var(--muted)}
+.progress{height:8px;background:#edf0ec;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;background:#a47bd5;border-radius:99px}
+.lessonrow{display:grid;grid-template-columns:74px 1fr auto;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}.lessonrow:last-child{border:0}.time{font-size:12px;color:var(--gold);font-weight:700}.tag{font-size:11px;padding:4px 8px;border-radius:99px;background:#f2f4f0;color:#62756a;white-space:nowrap}
+.field{display:grid;gap:6px;margin:10px 0}.field label{font-size:12px;color:var(--muted)}input,textarea,select{width:100%;border:1px solid #dfe5df;border-radius:10px;padding:10px 11px;background:#fff;color:var(--ink)}textarea{min-height:82px;resize:vertical}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.tabs button{background:#f5f7f4;border:1px solid var(--line);padding:7px 11px;border-radius:9px;color:#63746b;font-size:12px}.tabs button.active{background:#e4eee7;color:var(--green);border-color:#cbdccf}
+.move-card{border:1px solid var(--line);border-radius:14px;padding:15px;margin:10px 0}.move-card h3{display:flex;justify-content:space-between;gap:10px}.move-card p{margin:5px 0;color:#53635b;font-size:13px}.checkline{display:flex;gap:9px;align-items:flex-start;padding:8px 0}.checkline input{width:auto;margin-top:5px}
+.chatbox{background:#f7f8f5;border-radius:14px;padding:14px;min-height:110px}.bubble{padding:12px 14px;border-radius:14px;margin:8px 0;max-width:95%;font-size:13px}.bot{background:#f0e9fb}.user{background:#e9e3d7;margin-left:auto}
+.foot{margin-top:25px;color:#8a968e;font-size:11px;text-align:center}.hidden{display:none!important}.notice{background:#fff8e9;border:1px solid #f0e2c5;color:#765d35;padding:12px 14px;border-radius:12px;font-size:12px}
+
+.vision-status{margin-top:10px;padding:11px 13px;border-radius:11px;background:#f2f5f2;color:#52635a;font-size:12px;white-space:pre-wrap;line-height:1.65}
+.vision-bar{height:8px;background:#e9eee9;border-radius:99px;overflow:hidden;margin:10px 0}.vision-bar i{display:block;width:0;height:100%;background:#a47bd5;transition:width .25s}
+.vision-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.vision-metric{background:#f7f8f5;border-radius:12px;padding:10px}.vision-metric b{display:block;font-size:20px;color:var(--green)}.vision-metric span{font-size:11px;color:var(--muted)}
+.vision-video{width:100%;max-height:280px;background:#171b19;border-radius:12px;margin-top:8px}.vision-image{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--line);margin-top:8px}
+.vision-video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.vision-segment{border:1px solid var(--line);border-radius:12px;padding:12px;margin:9px 0}.vision-segment p{margin:5px 0;font-size:12px;color:#53635b}.vision-actions{display:flex;gap:7px;flex-wrap:wrap}.vision-actions button{margin-top:4px}.consent-line{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:#63746b;margin:10px 0}.consent-line input{width:auto;margin-top:4px}.vision-section-title{display:flex;align-items:center;gap:9px;margin-bottom:8px}.vision-section-title .tag{background:#e9f0eb;color:var(--green)}
+.pillar-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}.pillar-card{border:1px solid var(--line);border-radius:14px;padding:15px;background:#fdfbff}.pillar-card h3{font-size:16px;margin:9px 0 5px}.pillar-card p{font-size:14px;color:var(--muted);margin:0}.pillar-live{background:#eee5fb;color:#65419f}.pillar-partial{background:#f4eafb;color:#81539e}.pillar-planned{background:#f4f1f8;color:#6e647b}.small{font-size:13px}.field label{font-size:14px}.nav button{font-size:14px}
+@media(max-width:760px){.pillar-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.vision-video-grid,.vision-metrics{grid-template-columns:1fr}}
+
+@media(max-width:760px){.shell{padding:14px 13px 35px}header{align-items:flex-start}.hero{grid-template-columns:1fr;padding:24px 22px}.hero-side{max-width:260px}.span-8,.span-7,.span-6,.span-5,.span-4{grid-column:span 12}.card{padding:16px}.lessonrow{grid-template-columns:58px 1fr}.lessonrow .tag{grid-column:2}.nav{overflow:auto;flex-wrap:nowrap;padding-bottom:4px}.nav button{white-space:nowrap}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header><div class="brand"><div class="logo">舞</div><div><b>舞伴智练</b><small>WUBAN ZHILIAN · AI DANCE LEARNING</small></div></div><span class="pill">第一阶段 · 本地验证原型</span></header>
+<section class="hero"><div><div class="eyebrow">AI DANCE LEARNING · COMMUNITY CONNECTION</div><h1>让舞蹈学习，<br>更容易持续。</h1><p>面向社区中老年舞蹈爱好者的 AI 学习与服务连接器。以现代舞学习为切入点，围绕 AI 动作指导、情感陪伴与高校—社区资源连接，逐步形成“学—练—评—陪—教—交流”的服务闭环。</p></div><div class="hero-side"><span>演示课程样本</span><strong>《世界赠予我的》</strong><span>现代舞 · 教学视频观察样本</span><div style="margin-top:12px" class="statrow"><div><b style="font-size:20px">4</b><span>学习模块</span></div><div><b style="font-size:20px">7</b><span>示例片段</span></div></div></div></section>
+<nav class="nav" id="nav">
+<button class="active" data-page="home">学习首页</button><button data-page="movement">动作精讲</button><button data-page="practice">记忆陪练</button><button data-page="knowledge">舞蹈知识</button><button data-page="assistant">AI陪伴</button><button data-page="expression">艺术表达</button><button data-page="teacher">教师工作区</button><button data-page="vision">AI动作识别</button>
+</nav>
+<main>
+<section id="home" class="page">
+<div class="grid">
+<div class="card span-8"><div class="kicker">YOUR LEARNING PATH</div><h2>继续你的舞蹈学习</h2><p class="muted">先从动作看懂、动作记住，再逐渐尝试完整表达。</p>
+<div class="statrow"><div class="stat"><b id="doneCount">0/7</b><span>今日练习片段</span></div><div class="stat"><b>4</b><span>学习模块</span></div><div class="stat"><b>现代舞</b><span>当前知识主线</span></div></div>
+<div style="margin-top:18px"><div class="small" style="display:flex;justify-content:space-between"><span>本周片段练习进度</span><span id="percent">0%</span></div><div class="progress"><i id="homeProgress" style="width:0%"></i></div></div>
+<div class="actions"><button class="btn" onclick="go('practice')">开始今日练习</button><button class="btn secondary" onclick="go('movement')">查看动作讲解</button></div></div>
+<div class="card span-4"><div class="kicker">TODAY'S NOTE</div><h2>今天记住一点</h2><p>动作记忆不只依赖反复观看。尝试先暂停视频，自己回忆下一个动作，再播放核对。</p><div class="tag">主动回忆 · 练习建议</div></div>
+<div class="card span-12"><div class="kicker">PRODUCT POSITIONING · 三大核心支柱</div><h2>AI 动作指导 + 情感陪伴 + 高校—社区资源连接</h2><p class="muted">当前先验证“看示范—学动作—录练习—做对照—获得陪伴”的核心学习闭环。以下状态区分已具备的原型与后续规划。</p><div class="pillar-grid"><div class="pillar-card"><span class="tag pillar-live">已有原型 · 待真实验收</span><h3>AI 动作指导</h3><p>人体姿态关键点、骨架预览、教师手动分段审核、学员视频对照。</p></div><div class="pillar-card"><span class="tag pillar-partial">基础原型</span><h3>AI 情感陪伴</h3><p>舞蹈学习问答和鼓励回应；个性化复习、主动提醒与成长陪伴仍需迭代。</p></div><div class="pillar-card"><span class="tag pillar-planned">后续规划 · 尚未开发</span><h3>高校—社区资源连接</h3><p>未来探索高校舞蹈人才实践、社区课程需求、线上指导与课程制作；当前没有人才匹配或服务结算功能。</p></div></div></div>
+
+<div class="card span-6"><div class="feature"><div class="ico">👣</div><div><h2>动作精讲</h2><p class="muted">从身体部位、方向、空间位置和动作衔接理解每个动作。</p><button class="btn secondary" onclick="go('movement')">进入动作精讲</button></div></div></div>
+<div class="card span-6"><div class="feature"><div class="ico">🧠</div><div><h2>记忆陪练</h2><p class="muted">按片段练习，特别关注容易忘记的连接处。</p><button class="btn secondary" onclick="go('practice')">进入记忆陪练</button></div></div></div>
+<div class="card span-6"><div class="feature"><div class="ico">📚</div><div><h2>舞蹈知识</h2><p class="muted">以现代舞为核心，逐步积累身体、空间、时间、力度等知识。</p><button class="btn secondary" onclick="go('knowledge')">开始每日学习</button></div></div></div>
+<div class="card span-6"><div class="feature"><div class="ico">💫</div><div><h2>艺术表达（选修）</h2><p class="muted">从动作与音乐出发，探索舞蹈可能传达的情感。</p><button class="btn secondary" onclick="go('expression')">探索艺术表达</button></div></div></div>
+<div class="card span-12 notice">试用说明：本版为可交互前端试用版，尚未连接在线大模型。课程片段是视频观察草稿，动作名称、左右、角度、脚步和音乐节拍须由教师审核。练习与反馈暂存在本机浏览器。</div>
+</div></section>
+<section id="movement" class="page hidden">
+<div class="grid"><div class="card span-12"><div class="kicker">MODULE 01 · MOVEMENT GUIDE</div><h2>动作精讲：先看懂，再练习</h2><p class="muted">以下是根据上传教学视频抽样观察整理的动作线索，不是教师最终定稿。请按教师示范确认左右、角度、脚步和节拍。</p>
+<div class="tabs" id="moveTabs"></div><div id="moveDetail"></div></div></div>
+</section>
+<section id="practice" class="page hidden">
+<div class="grid"><div class="card span-7"><div class="kicker">MODULE 02 · MEMORY PRACTICE</div><h2>分段记忆陪练</h2><p class="muted">每天练一小段，重点回忆动作顺序和前后衔接。</p><div id="practiceList"></div></div>
+<div class="card span-5"><div class="kicker">ACTIVE RECALL</div><h2>动作回忆小测</h2><p id="quizQuestion">准备好了吗？选择一个问题开始回忆。</p><div id="quizOptions"></div><div id="quizFeedback" class="chatbox" style="margin-top:12px">提示：先凭记忆回答，再看解析。答错不是失败，而是找到需要复习的位置。</div><button class="btn secondary" style="margin-top:12px" onclick="newQuiz()">换一道题</button></div>
+<div class="card span-12"><h3>动作衔接专项训练</h3><p class="muted">针对“单个动作记得住，连起来容易忘”的情况，每次只练相邻两个片段：先不看视频回忆，再慢速连接，最后对照老师的视频核对。</p><div id="transitionList"></div><div class="notice">提示：连接点的具体动作、左右、拍点和技术标准，以授课教师确认的课程资料为准。这里记录的是练习体验，不是AI动作评分。</div></div><div class="card span-12"><h3>我的练习记录</h3><p class="muted">勾选你实际完成的片段。数据保存在当前浏览器本地，不会自动发送给教师。</p><div class="progress"><i id="practiceProgress" style="width:0%"></i></div><p class="small" id="practiceSummary">已完成 0 个片段</p></div>
+<div class="card span-6"><h3>一周练习建议</h3><div id="weeklyPlan"></div><p class="small">可根据课程进度、身体状态和教师安排调整，不要求每天都练。</p></div>
+<div class="card span-6"><h3>本次练习自评</h3><div class="field"><label>今天练习后，你对动作顺序的把握程度</label><select id="confidence"><option value="1">1 · 还不太记得</option><option value="2">2 · 需要看视频提示</option><option value="3" selected>3 · 大部分能回忆</option><option value="4">4 · 基本能独立完成</option><option value="5">5 · 能稳定完整完成</option></select></div><div class="field"><label>今天最困难的地方</label><select id="difficulty"><option>动作顺序</option><option>动作衔接</option><option>左右方向</option><option>身体位置与重心</option><option>音乐节奏</option><option>体力或身体不适</option><option>没有明显困难</option></select></div><div class="field"><label>补充说明（选填）</label><textarea id="practiceNote" placeholder="例如：第二段接第三段时容易停顿……"></textarea></div><button class="btn" onclick="savePracticeFeedback()">保存本次自评</button><p class="small" id="feedbackSaved"></p></div></div>
+</section>
+<section id="knowledge" class="page hidden">
+<div class="grid"><div class="card span-12"><div class="kicker">MODULE 03 · DANCE KNOWLEDGE</div><h2>现代舞知识小课堂</h2><p class="muted">以正在学习的舞蹈为入口，逐步建立身体、空间、时间、力度和作品理解的知识体系。</p><div class="tabs" id="knowledgeTabs"></div><div id="knowledgeDetail"></div></div>
+<div class="card span-12 notice">知识内容为入门学习提示，不替代系统舞蹈史、舞蹈理论教材；涉及流派、人物和作品的具体史实，正式发布前应补充可靠出处。</div><div class="card span-12"><h3>问问舞伴智练</h3><p class="small">进入AI舞伴页面，询问动作、衔接、现代舞知识和课后练习方法。</p><button class="btn" onclick="go('assistant')">打开AI舞伴</button></div></div>
+</section>
+<section id="assistant" class="page hidden"><div class="grid"><div class="card span-12"><div class="kicker">AI DANCE COMPANION · V1.3</div><h2>和你的AI舞伴聊一聊</h2><p class="muted">询问动作理解、动作衔接、现代舞基础知识和课后练习方法。回答优先参考项目知识库；具体动作标准仍以教师确认为准。</p><div id="aiStatus" class="notice">正在检查AI服务状态……</div></div><div class="card span-8"><div id="aiChatLog" class="chatbox" style="min-height:240px;max-height:460px;overflow:auto"><div class="bubble bot">你好，我是舞伴智练。你可以问我：“动作衔接总是忘记怎么办？”</div></div><div class="field" style="margin-top:14px"><label for="aiQuestion">输入你的问题</label><textarea id="aiQuestion" rows="3" placeholder="例如：我能记住单个动作，但连起来就忘了，应该怎么练？"></textarea></div><div class="actions"><button class="btn" id="aiSendButton" onclick="sendAIMessage()">发送给AI舞伴</button><button class="btn secondary" onclick="useAISuggestion('我能记住单个动作，但连起来就忘了，应该怎么练？')">动作衔接建议</button><button class="btn ghost" onclick="useAISuggestion('请用简单的话解释现代舞中的空间、时间和力度。')">现代舞知识</button></div><p class="small">请不要输入身份证号、住址、联系方式或其他不必要的个人敏感信息。</p></div><div class="card span-4"><h3>你可以这样提问</h3><div class="move-card"><b>动作学习</b><p>这个动作应该观察身体哪些部位？</p></div><div class="move-card"><b>动作记忆</b><p>怎么把前后两个动作连接起来？</p></div><div class="move-card"><b>舞蹈知识</b><p>现代舞里的力度是什么意思？</p></div><div class="move-card"><b>艺术表达</b><p>怎样从动作和音乐理解舞蹈情绪？</p></div></div><div class="card span-12 notice">服务说明：未配置服务器端模型密钥时，系统使用有限的本地知识答复；配置AI服务后才调用在线大模型。API密钥不会放在网页代码中。</div></div></section>
+<section id="expression" class="page hidden">
+<div class="grid"><div class="card span-7"><div class="kicker">MODULE 04 · OPTIONAL</div><h2>舞蹈情感与艺术表达</h2><p class="muted">选修探索：没有唯一标准答案。先从自己的身体感受和音乐体验出发。</p>
+<div class="field"><label>看这段舞蹈时，你最先感受到什么？</label><select id="feeling"><option>舒展、自由</option><option>温柔、平静</option><option>力量、坚定</option><option>思念、回望</option><option>喜悦、轻盈</option><option>说不清，想再观察</option></select></div>
+<div class="field"><label>哪个动作或身体变化让你产生这种感受？</label><textarea id="feelingDetail" placeholder="例如：手臂向外展开时，我感觉身体变得开阔……"></textarea></div>
+<button class="btn" onclick="reflectFeeling()">生成艺术观察提示</button><div id="reflection" class="chatbox" style="margin-top:12px">这里会帮助你把感受转化为观察问题，不替你规定作品含义。</div></div>
+<div class="card span-5"><h3>观察舞蹈的四个入口</h3><div class="move-card"><b>身体</b><p>动作从哪里开始？身体如何变化？</p></div><div class="move-card"><b>空间</b><p>舞者向哪里移动？动作占据怎样的空间？</p></div><div class="move-card"><b>时间</b><p>动作是急促、缓慢，还是有停顿？</p></div><div class="move-card"><b>力度</b><p>动作是轻柔、流动，还是有爆发力？</p></div></div></div>
+</section>
+<section id="teacher" class="page hidden">
+<div class="grid"><div class="card span-7"><div class="kicker">TEACHER WORKSPACE</div><h2>教师课程资料录入</h2><p class="muted">把教师实际教的内容录入课程，生成可复习的动作条目。保存仅在本浏览器中。</p>
+<div class="field"><label>舞蹈名称</label><input id="courseName" value="《世界赠予我的》"/></div>
+<div class="field"><label>片段名称</label><input id="newMoveName" placeholder="例如：第二段·手臂展开与侧倾"/></div>
+<div class="field"><label>时间范围（教师确认后填写）</label><input id="newMoveTime" placeholder="例如：00:18—00:32"/></div>
+<div class="field"><label>主要动作部位</label><input id="newMoveParts" placeholder="例如：肩、肘、腕、躯干、髋、膝"/></div>
+<div class="field"><label>动作方向与路径</label><textarea id="newMoveDirection" placeholder="例如：从身体侧方向斜上方延伸；左右以舞者自身为准。"></textarea></div>
+<div class="field"><label>动作位置与身体要求</label><textarea id="newMovePosition" placeholder="例如：手臂到达教师示范的位置；肩颈放松；躯干保持延伸。具体角度待教师确认。"></textarea></div>
+<div class="field"><label>支撑、重心与节奏</label><textarea id="newMoveSupport" placeholder="例如：支撑脚、重心变化、动作速度或音乐拍点；不确定的内容标注待确认。"></textarea></div>
+<div class="field"><label>动作衔接与常见困难</label><textarea id="newMoveLink" placeholder="前一个动作如何结束？下一个动作如何开始？学员容易在哪里忘记？"></textarea></div>
+<div class="field"><label>教师口令与安全提醒</label><textarea id="newMoveCue" placeholder="例如：先延伸再转向；膝踝不适者缩小幅度，不强行下压。"></textarea></div>
+<div class="actions"><button class="btn" onclick="addTeacherMove()">保存动作条目</button><button class="btn secondary" onclick="exportData()">导出课程JSON</button><button class="btn ghost" onclick="document.getElementById('importJson').click()">导入课程JSON</button><input id="importJson" type="file" accept="application/json,.json" hidden onchange="importData(event)"></div></div>
+<div class="card span-5"><h3>教师确认清单</h3><p class="small">建议教师优先核对以下信息，再将示例草稿作为正式教学内容使用。</p><label class="checkline"><input type="checkbox">动作左右方向是否正确</label><label class="checkline"><input type="checkbox">手臂与腿部的具体位置</label><label class="checkline"><input type="checkbox">动作角度和身体姿态</label><label class="checkline"><input type="checkbox">音乐节拍与时间节点</label><label class="checkline"><input type="checkbox">动作衔接和结束姿态</label><label class="checkline"><input type="checkbox">安全提示和适用程度</label><div class="notice">请勿将未经教师核实的自动生成内容直接作为标准动作教学。</div></div>
+<div class="card span-12"><h3>已录入的课程动作</h3><div id="teacherEntries" class="muted">暂时没有新增动作条目。</div></div>
+<div class="card span-12"><h3>试用反馈与数据导出</h3><p class="muted">每次自评只保存在填写者当前设备。请在征得同意后，再由试用者主动导出并交给教师汇总。</p><div id="feedbackLog" class="small">暂无自评记录。</div><div class="actions"><button class="btn secondary" onclick="exportFeedbackCSV()">导出试用反馈CSV</button><button class="btn secondary" onclick="exportTransitionCSV()">导出动作衔接记录CSV</button><button class="btn ghost" onclick="clearLocalData()">清除此设备本地数据</button></div><p class="small">隐私提醒：不要录入身份证号、联系方式、健康诊断等不必要的个人敏感信息；如需收集视频或照片，先征得明确同意。</p></div></div>
+</section>
+
+<section id="vision" class="page hidden">
+  <div class="grid">
+    <div class="card span-12">
+      <div class="kicker">V1.4 · LOCAL VISUAL PILOT</div>
+      <h2>AI舞蹈视频识别与动作对照</h2>
+      <p class="muted">教师先上传标准示范视频，AI提取人体姿态关键点并生成骨架预览；教师手动划分、讲解并审核片段后，学员才可以上传练习视频进行并排对照。</p>
+      <div class="notice">本版本为本机单人试点工具：只支持录制后上传的视频，不做实时纠错；AI识别人体姿态，不自动理解动作名称、不评判舞蹈审美，也不输出动作总分。请先使用教师本人录制的视频测试。</div>
+    </div>
+    <div class="card span-6">
+      <div class="vision-section-title"><span class="tag">教师端 01</span><h3>创建课程并上传标准示范</h3></div>
+      <div class="field"><label for="teacherCourseSelect">继续编辑已有课程（本机保存）</label><select id="teacherCourseSelect"><option value="">暂无课程</option></select><div class="vision-actions"><button class="btn ghost" type="button" onclick="deleteVisionCourse()">删除当前选中课程</button></div></div>
+      <div class="field"><label for="visionCourseTitle">新课程名称</label><input id="visionCourseTitle" value="我的现代舞课程" maxlength="100"></div>
+      <div class="field"><label for="visionDanceStyle">舞种</label><select id="visionDanceStyle"><option>现代舞</option><option>当代舞</option><option>舞蹈基础训练</option><option>其他</option></select></div>
+      <div class="field"><label for="referenceFile">教师标准示范视频（MP4优先，10—30秒）</label><input id="referenceFile" type="file" accept="video/mp4,video/quicktime,video/x-m4v,video/avi"></div>
+      <label class="consent-line"><input id="referenceConsent" type="checkbox"><span>我确认该视频由我本人录制，或已取得画面中所有成年参与者的明确同意；视频仅用于本机舞蹈动作分析。</span></label>
+      <button class="btn" id="referenceUploadBtn" onclick="createCourseAndAnalyze()">创建课程并开始AI识别</button>
+      <div class="vision-bar"><i id="referenceProgress"></i></div>
+      <div id="referenceStatus" class="vision-status">等待上传教师标准视频。建议固定机位、全身和双脚完整入镜、光线均匀。</div>
+      <div id="referenceResult" class="hidden">
+        <div class="vision-metrics">
+          <div class="vision-metric"><b id="referenceDetected">—</b><span>检测到姿态的抽样帧</span></div>
+          <div class="vision-metric"><b id="referenceRate">—</b><span>姿态检测比例（非评分）</span></div>
+          <div class="vision-metric"><b id="referenceSampled">—</b><span>抽样帧总数</span></div>
+        </div>
+        <p id="referenceInterpretation" class="small"></p>
+        <label class="small">教师原始示范视频（可拖动到动作起止位置）</label>
+        <video id="referenceOriginalVideo" class="vision-video" controls playsinline></video>
+        <div class="actions">
+          <a id="referenceJsonLink" class="btn ghost" target="_blank" rel="noopener">下载姿态关键点JSON</a>
+          <a id="referencePreviewLink" class="btn ghost" target="_blank" rel="noopener">下载骨架预览视频</a>
+        </div>
+        <label class="small" style="display:block;margin-top:12px">姿态识别抽样预览（骨架关键点）</label>
+        <img id="referenceContactSheet" class="vision-image" alt="教师示范视频姿态识别预览">
+        <div id="segmentEditor" class="move-card hidden">
+          <h3>教师审核：添加一个动作片段</h3>
+          <p class="small">AI只负责提供姿态和时间线索；动作名称、动作含义、方向、重心和教学要求由教师填写并确认。</p>
+          <div class="field"><label for="segmentTitle">动作片段名称</label><input id="segmentTitle" placeholder="例如：第一段动作"></div>
+          <div class="grid">
+            <div class="span-6 field"><label for="segmentStart">开始时间（秒）</label><input id="segmentStart" type="number" min="0" step="0.1" value="0"><button class="btn ghost" type="button" onclick="setSegmentTime('start')">取视频当前时间为开始</button></div>
+            <div class="span-6 field"><label for="segmentEnd">结束时间（秒）</label><input id="segmentEnd" type="number" min="0.1" step="0.1" value="5"><button class="btn ghost" type="button" onclick="setSegmentTime('end')">取视频当前时间为结束</button></div>
+          </div>
+          <div class="field"><label for="segmentNotes">动作位置、方向、路径、重心、节奏、易错点等教师讲解</label><textarea id="segmentNotes" placeholder="请填写你希望学员注意的动作要点；不确定的内容可以留空，之后再补充。"></textarea></div>
+          <button class="btn" onclick="saveVisionSegment()">保存为待审核片段</button>
+        </div>
+        <div class="move-card"><h3>课程片段审核</h3><div id="visionSegmentList" class="small">分析完成后，可以添加动作片段。</div><div class="vision-actions"><button class="btn" onclick="publishVisionCourse()">教师确认并发布课程</button><button class="btn ghost" onclick="deleteVisionCourse()">删除本课程及视频</button></div><p class="small">只有经过教师确认的片段才会出现在学员端。删除课程会一并删除该课程关联的本地视频和分析结果。</p></div>
+      </div>
+    </div>
+    <div class="card span-6">
+      <div class="vision-section-title"><span class="tag">学员端 02</span><h3>上传练习视频并进行对照</h3></div>
+      <p class="small">教师发布至少一个审核片段后，学员才可选择课程和动作片段。</p>
+      <div class="field"><label for="practiceCourse">选择已发布课程</label><select id="practiceCourse"><option value="">暂无已发布课程</option></select></div>
+      <div class="field"><label for="practiceSegment">选择动作片段</label><select id="practiceSegment"><option value="">请先选择课程</option></select></div>
+      <div class="field"><label for="studentAlias">学员代号（不填真实姓名）</label><input id="studentAlias" value="学员A" maxlength="32"></div>
+      <div class="field"><label for="practiceFile">个人练习视频（请录制所选片段，尽量与示范视频相同机位）</label><input id="practiceFile" type="file" accept="video/mp4,video/quicktime,video/x-m4v,video/avi"></div>
+      <label class="consent-line"><input id="practiceConsent" type="checkbox"><span>我确认已知晓视频用途，并同意在本机进行动作姿态分析；我有权上传该视频，画面中其他人已同意。</span></label>
+      <button class="btn" id="practiceUploadBtn" onclick="uploadPracticeVideo()">上传练习视频并分析</button>
+      <div class="vision-bar"><i id="practiceProgress"></i></div>
+      <div id="practiceStatus" class="vision-status">选择课程和片段后，可上传一段10—30秒练习视频。</div>
+      <div id="comparisonResult" class="hidden">
+        <h3 style="margin-top:16px">标准示范与个人练习并排观察</h3>
+        <div class="vision-metrics">
+          <div class="vision-metric"><b id="compareReferenceRate">—</b><span>标准视频姿态检测比例</span></div>
+          <div class="vision-metric"><b id="comparePracticeRate">—</b><span>练习视频姿态检测比例</span></div>
+          <div class="vision-metric"><b id="compareDuration">—</b><span>练习视频时长</span></div>
+        </div>
+        <div class="vision-video-grid">
+          <div><b class="small">教师标准视频</b><video id="compareReferenceVideo" class="vision-video" controls playsinline></video><img id="compareReferenceSheet" class="vision-image" alt="标准视频骨架预览"></div>
+          <div><b class="small">学员练习视频</b><video id="comparePracticeVideo" class="vision-video" controls playsinline></video><img id="comparePracticeSheet" class="vision-image" alt="练习视频骨架预览"></div>
+        </div>
+        <div class="notice" id="comparisonNote" style="margin-top:12px"></div>
+        <div class="actions"><a id="practiceJsonLink" class="btn ghost" target="_blank" rel="noopener">下载本次姿态JSON</a><button class="btn ghost" onclick="deletePracticeJob()">删除本次练习视频与结果</button></div>
+      </div>
+    </div>
+    <div class="card span-12">
+      <h3>拍摄与隐私提示</h3>
+      <div class="grid">
+        <div class="span-6"><ul class="small"><li>尽量只拍一位舞者，全身与双脚完整可见。</li><li>手机固定，不跟拍、不变焦；背景简单、光线均匀。</li><li>建议MP4（H.264）、720p或1080p，首轮10—30秒，最长60秒。</li><li>教师示范与学员练习尽量使用相同机位、方向和镜像状态。</li></ul></div>
+        <div class="span-6"><ul class="small"><li>视频保存在本机私有目录，不会自动上传云端或第三方大模型。</li><li>原始视频不通过公开静态目录访问；页面提供删除入口。</li><li>首轮请先使用教师本人视频。上传学员视频前必须取得明确同意。</li><li>关键点是算法估计，不是精密动作捕捉；遮挡、旋转和机位差异会影响结果。</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<div class="foot">舞伴智练 V1.3 衔接专项训练版 · 练习记录保存在当前浏览器 · 动作标准以教师审核为准</div>
+</div>
+<script>
+const segments=[
+{time:"00:00–00:08",name:"准备与动作启动",note:"画面开头为站立准备，随后进入上肢和身体动作。",body:"可观察起始站姿、身体朝向，以及第一个动作从哪个部位启动。",focus:"教师需补充起始脚位、重心分配、动作启动拍点。",link:"确认准备姿态如何进入第一个上肢动作。"},
+{time:"00:08–00:30",name:"上肢延伸与身体拉长",note:"画面可见手臂向上或斜向延伸，并伴随身体和下肢的空间变化。",body:"观察肩、肘、腕的动作路径；记录躯干是否侧倾，以及下肢如何支撑。",focus:"不要只记手臂终点，还要记动作路径、躯干参与和支撑脚。",link:"教师确认延伸动作结束时，手臂如何收回或过渡。"},
+{time:"00:30–00:48",name:"手臂打开与空间变化",note:"画面出现手臂向两侧打开、身体方向变化和移动。",body:"观察双臂展开的方向、肩部状态、身体朝向及移动路线。",focus:"区分舞者自身左右与镜像左右；确认手臂高度和脚步。",link:"记录打开动作后身体如何转向或移动到下一位置。"},
+{time:"00:48–01:04",name:"手臂弧线与躯干侧倾",note:"画面出现手臂弧线、手部靠近头部及躯干侧向变化。",body:"观察手臂经过头部附近的路径、头颈与躯干关系、侧倾方向。",focus:"避免只模仿手的位置；关注躯干延伸、肩颈放松与重心。",link:"教师确认侧倾结束后，是先还原躯干还是直接进入下一动作。"},
+{time:"01:04–01:28",name:"身体下降与低位动作",note:"画面中舞者降低身体重心，出现接近跪地或低位的动作。",body:"观察屈膝、髋部下降、躯干方向及手臂支撑/延伸的关系。",focus:"低位动作需要结合个人膝踝能力调整，不要强行下压或模仿极限幅度。",link:"确认从低位回到站立或转向时的先后顺序与支撑方式。"},
+{time:"01:28–01:52",name:"连续流动与方向转换",note:"画面出现连续手臂动作、躯干变化和方向转换。",body:"关注动作是否连续、手臂与躯干如何衔接、移动方向如何改变。",focus:"可以先慢速分解，再逐渐恢复音乐速度；标记最容易断开的连接点。",link:"请教师确认连续动作的具体顺序、拍点和转向方向。"},
+{time:"01:52–02:10",name:"动作延伸与结尾",note:"画面接近结尾时，舞者继续移动并完成最后一组动作。",body:"观察最后的手臂延伸、身体方向和结束姿态是否稳定。",focus:"明确结束动作的落点、停留时间和视线方向。",link:"确认最后一个动作的结束姿态，以及音乐结束时是否需要保持。"}
+];
+const topics=[
+{title:"身体与动作",body:"舞蹈以身体为媒介。学习动作时，可以从启动部位、动作路径、关节参与、躯干关系和结束姿态几个方面观察。不要只记一个静止造型，也要记住动作如何发生。",question:"这个动作从身体哪个部位开始？其他部位如何参与？"},
+{title:"空间与方向",body:"空间观察包括方向、路径、水平高低、身体与周围空间的关系。镜面教学尤其要分清舞者自身左右与镜像呈现的左右。",question:"舞者向哪里移动？动作在身体前方、侧方还是上方展开？"},
+{title:"时间与节奏",body:"舞蹈动作可以有快慢、停顿、延长和节奏变化。练习时先确认动作顺序，再逐步与音乐节拍对应。当前样本尚未完成音乐拍点标注。",question:"动作是在音乐的哪一处开始、延长或停顿？"},
+{title:"力度与流动",body:"力度涉及动作的轻重、张弛、控制和能量变化。观察动作时，可以比较发力与放松、连续与顿挫，但具体表达应结合教师示范和作品语境。",question:"这段动作更偏向轻柔、持续，还是清晰、有力？"},
+{title:"现代舞基础认识",body:"现代舞并非单一固定动作风格。它包含多种历史脉络、创作观念和身体实践。学习现代舞时，应结合具体作品、编舞者、训练方法与时代背景理解，避免用一套动作标准概括全部现代舞。",question:"这支舞的动作语言有哪些特点？它与音乐、身体经验有什么关系？"},
+{title:"动作质感与力度",body:"动作质感可以从持续或顿挫、轻或重、直接或间接、自由或受控等维度观察。这些是帮助描述动作的观察词，不是给所有动作套用的固定分类。",question:"同一个动作如果速度、力度或呼吸发生变化，观看感受会有什么不同？"},
+{title:"呼吸与身体协调",body:"呼吸可以帮助学习者觉察动作的连续性与身体张力。初学者不必刻意憋气或追求复杂呼吸技巧，应以自然呼吸、舒适活动范围和教师指导为先。",question:"练习时是否出现不自觉憋气？呼吸与动作转换能否保持自然？"},
+{title:"即兴与动作探索",body:"即兴练习可以从一个简单任务开始，例如改变动作方向、速度、空间高低或身体启动部位。探索应在安全、可控的范围内进行，不以动作难度或幅度作为唯一评价标准。",question:"如果保持动作主题不变，只改变方向或速度，动作会发生什么变化？"}
+];
+let completed=JSON.parse(localStorage.getItem("wb_done")||"[]");
+let custom=JSON.parse(localStorage.getItem("wb_custom")||"[]");
+let feedbacks=JSON.parse(localStorage.getItem("wb_feedbacks")||"[]");
+let transitionLogs=JSON.parse(localStorage.getItem("wb_transitions")||"{}");
+let activeMove=0,activeTopic=0;
+function go(page){document.querySelectorAll(".page").forEach(x=>x.classList.add("hidden"));document.getElementById(page).classList.remove("hidden");document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));window.scrollTo({top:0,behavior:"smooth"});}
+document.querySelectorAll(".nav button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+function renderMoves(){document.getElementById("moveTabs").innerHTML=segments.map((s,i)=>`<button class="${i===activeMove?'active':''}" onclick="selectMove(${i})">片段${i+1}</button>`).join("");let s=segments[activeMove];document.getElementById("moveDetail").innerHTML=`<div class="move-card"><div class="kicker">${s.time} · 视频观察草稿</div><h3>${s.name}</h3><p>${s.note}</p><div class="grid"><div class="span-6"><h3>动作观察</h3><p>${s.body}</p></div><div class="span-6"><h3>练习重点</h3><p>${s.focus}</p></div></div><h3>前后衔接</h3><p>${s.link}</p><div class="notice">待教师确认：具体左右、角度、脚步、拍点及动作名称。以上为画面观察提示，不是标准动作定论。</div></div>`;}
+function selectMove(i){activeMove=i;renderMoves()}
+function renderWeeklyPlan(){const plan=["回忆第一段：先不看视频，口述动作顺序。","学习第二段：关注动作路径和身体位置。","连接第一、二段：慢速练习两段之间的转换。","学习第三、四段：标记方向变化和容易混淆处。","练习中后段：关注重心变化，按个人能力调整幅度。","完整串联：先慢速，再尝试跟音乐练习。","轻量复习与自评：记录最需要教师帮助的连接点。"];document.getElementById("weeklyPlan").innerHTML=plan.map((x,i)=>`<div class="lessonrow"><div class="time">第${i+1}天</div><div>${x}</div></div>`).join("");}
+function savePracticeFeedback(){const item={date:new Date().toLocaleDateString("zh-CN"),confidence:document.getElementById("confidence").value,difficulty:document.getElementById("difficulty").value,note:document.getElementById("practiceNote").value.trim()};feedbacks.push(item);localStorage.setItem("wb_feedbacks",JSON.stringify(feedbacks));document.getElementById("feedbackSaved").textContent="已保存在本设备。你可以在教师工作区导出记录。";renderFeedbackLog();}
+function renderFeedbackLog(){const el=document.getElementById("feedbackLog");if(!el)return;el.innerHTML=feedbacks.length?feedbacks.map(x=>`<div class="lessonrow"><div class="time">${escapeHtml(x.date)}</div><div>把握程度：${escapeHtml(x.confidence)}/5 · 困难：${escapeHtml(x.difficulty)}<div class="small">${escapeHtml(x.note||"未填写补充说明")}</div></div></div>`).join(""):`暂无自评记录。`;}
+function exportFeedbackCSV(){const rows=[["日期","动作顺序把握程度(1-5)","主要困难","补充说明"],...feedbacks.map(x=>[x.date,x.confidence,x.difficulty,x.note])];const csv="\uFEFF"+rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");downloadFile(csv,"舞伴智练_试用反馈.csv","text/csv;charset=utf-8");}
+function downloadFile(content,name,type){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function exportTransitionCSV(){
+ const rows=[["连接点","练习结果","卡点说明","更新时间"],...Object.entries(transitionLogs).map(([k,v])=>[k,v.status||"",v.note||"",v.updatedAt||""])];
+ const csv="\uFEFF"+rows.map(r=>r.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");
+ downloadFile(csv,"舞伴智练_动作衔接记录.csv","text/csv;charset=utf-8");
+}
+
+function clearLocalData(){if(!confirm("确定清除此设备保存的练习、自评和教师录入内容吗？建议先导出备份。"))return;["wb_done","wb_custom","wb_feedbacks","wb_transitions"].forEach(k=>localStorage.removeItem(k));completed=[];custom=[];feedbacks=[];transitionLogs={};renderPractice();renderTransitions();renderTeacher();renderFeedbackLog();updateProgress();}
+function updateProgress(){let n=completed.length;document.getElementById("doneCount").textContent=n+"/7";document.getElementById("percent").textContent=Math.round(n/7*100)+"%";document.getElementById("homeProgress").style.width=n/7*100+"%";document.getElementById("practiceProgress").style.width=n/7*100+"%";document.getElementById("practiceSummary").textContent=`已完成 ${n} 个片段，剩余 ${7-n} 个。`;}
+function renderTransitions(){
+ const el=document.getElementById("transitionList"); if(!el)return;
+ el.innerHTML=segments.slice(0,-1).map((s,i)=>{
+  const next=segments[i+1], key=`${i}-${i+1}`, v=transitionLogs[key]||{}, status=v.status||"未练习";
+  return `<div class="move-card"><div class="kicker">连接点 ${i+1} · ${s.time} → ${next.time}</div><h3>${escapeHtml(s.name)} → ${escapeHtml(next.name)}</h3><p class="small">先回忆前一段的结束姿态，再启动后一段；重点留意两段之间的重心、方向和身体路径。</p><div class="field"><label>本次练习结果</label><select onchange="setTransitionStatus('${key}',this.value)"><option ${status==="未练习"?"selected":""}>未练习</option><option ${status==="需要看视频提示"?"selected":""}>需要看视频提示</option><option ${status==="慢速可以连接"?"selected":""}>慢速可以连接</option><option ${status==="跟音乐基本连贯"?"selected":""}>跟音乐基本连贯</option><option ${status==="可以独立完成"?"selected":""}>可以独立完成</option></select></div><div class="field"><label>卡住的位置或感受（选填）</label><input value="${escapeHtml(v.note||"")}" placeholder="例如：前一段结束后，不知道重心怎样转到下一段" onchange="setTransitionNote('${key}',this.value)"></div><div class="small">当前记录：${escapeHtml(status)}</div></div>`;
+ }).join("");
+}
+function setTransitionStatus(key,status){transitionLogs[key]={...(transitionLogs[key]||{}),status,updatedAt:new Date().toISOString()};localStorage.setItem("wb_transitions",JSON.stringify(transitionLogs));}
+function setTransitionNote(key,note){transitionLogs[key]={...(transitionLogs[key]||{}),note,updatedAt:new Date().toISOString()};localStorage.setItem("wb_transitions",JSON.stringify(transitionLogs));}
+
+function renderPractice(){document.getElementById("practiceList").innerHTML=segments.map((s,i)=>`<div class="lessonrow"><div class="time">${s.time}</div><div><b>${s.name}</b><div class="small">建议：先回忆动作顺序，再播放视频核对</div></div><label class="tag"><input style="width:auto;margin-right:5px" type="checkbox" ${completed.includes(i)?'checked':''} onchange="toggleDone(${i},this.checked)">已练习</label></div>`).join("");}
+function toggleDone(i,v){completed=v?[...new Set([...completed,i])]:completed.filter(x=>x!==i);localStorage.setItem("wb_done",JSON.stringify(completed));renderPractice();updateProgress();}
+const quizzes=[
+{q:"练习一段舞蹈时，为什么建议先分段再连接？",opts:["减少一次需要记住的信息量，并找到连接难点","因为每个动作都必须单独跳","这样就不需要跟音乐"],a:0,why:"先分段有助于把注意力放在较小的动作单元，再专门练习段落之间的转换。"},
+{q:"面对镜面教学视频，最需要注意什么？",opts:["镜子里的左右一定等于自己左右","区分舞者自身左右与镜像呈现的左右","只看手臂，不看身体方向"],a:1,why:"镜像会改变视觉上的左右关系，教师应明确示范视角与学员跟随方向。"},
+{q:"动作衔接练习最重要的是？",opts:["只记住两个动作的终点造型","确认前一动作如何结束、后一动作如何启动","一开始就用最快速度跳"],a:1,why:"衔接不仅是两个造型，还包括重心、方向、身体路径和时间关系。"}
+];
+function newQuiz(){let q=quizzes[Math.floor(Math.random()*quizzes.length)];document.getElementById("quizQuestion").textContent=q.q;document.getElementById("quizOptions").innerHTML=q.opts.map((o,i)=>`<button class="btn ghost" style="display:block;width:100%;text-align:left;margin:7px 0" onclick="answerQuiz(${i},${q.a},${JSON.stringify(q.why).replace(/"/g,'&quot;')})">${String.fromCharCode(65+i)}. ${o}</button>`).join("");document.getElementById("quizFeedback").textContent="先凭记忆选择，再查看解释。";}
+function answerQuiz(i,a,why){document.getElementById("quizFeedback").innerHTML=(i===a?"<b>回答正确。</b> ":"<b>再想一想。</b> ")+why;}
+function renderTopics(){document.getElementById("knowledgeTabs").innerHTML=topics.map((t,i)=>`<button class="${i===activeTopic?'active':''}" onclick="selectTopic(${i})">${t.title}</button>`).join("");let t=topics[activeTopic];document.getElementById("knowledgeDetail").innerHTML=`<div class="move-card"><h3>${t.title}</h3><p>${t.body}</p><div class="notice"><b>想一想：</b>${t.question}</div></div>`;}
+function selectTopic(i){activeTopic=i;renderTopics()}
+function askKnowledge(){let q=document.getElementById("question").value.trim();if(!q)return;let answer="我目前的示例知识库还没有这条内容。你可以先从身体、空间、时间、力度、现代舞或动作连接这些主题提问。";if(/重心|平衡/.test(q))answer="重心与平衡会影响动作的稳定和转换。练习时先观察支撑脚、膝髋关系和躯干方向，再按教师示范调整。不要为了达到某个姿态而强行压迫关节。";else if(/空间|方向|左右|镜像/.test(q))answer="空间观察包括身体方向、移动路径、高低层次和动作延伸范围。镜面教学时，要明确画面左右是镜像还是舞者自身左右，最好让教师标注跟随方向。";else if(/连接|衔接|忘/.test(q))answer="可以把连接点单独拿出来练：先分别做前后两个动作，再慢速练中间的重心转移、方向变化和手臂路径，最后恢复音乐速度。每次练习前先尝试主动回忆。";else if(/现代舞/.test(q))answer="现代舞包含多种历史脉络和创作方法，不是一套统一动作。理解一支现代舞，建议同时观察身体动作、空间、时间、力度、作品背景和编舞者意图。";else if(/节奏|音乐|拍/.test(q))answer="先确认动作顺序，再听音乐中明显的节拍、重音和乐句。当前课程样本尚未完成逐拍标注，因此具体拍点需要教师核对。";document.getElementById("answer").innerHTML=`<div class="bubble user">${escapeHtml(q)}</div><div class="bubble bot">${answer}<div class="small">依据：舞伴智练 V1.0 示例知识。具体舞蹈动作以教师资料为准。</div></div>`;}
+function reflectFeeling(){let f=document.getElementById("feeling").value,d=document.getElementById("feelingDetail").value.trim();document.getElementById("reflection").innerHTML=`<b>你的初步感受：${f}</b><p>可以再观察：动作的方向、速度、力度和停顿，哪些细节让你产生这种感受？</p><p>${d?`你记录的观察：“${escapeHtml(d)}”`:"试着描述一个具体动作，而不只写情绪词。"}</p><p>提示：这是一种个人观看体验，不代表作品唯一或确定的含义。</p>`;}
+function addTeacherMove(){let get=id=>document.getElementById(id).value.trim();let name=get("newMoveName"),time=get("newMoveTime"),desc=get("newMovePosition")||get("newMoveDirection");if(!name||!desc){alert("请至少填写片段名称，以及动作位置或方向说明。");return;}custom.push({id:"M"+Date.now(),name,time,parts:get("newMoveParts"),direction:get("newMoveDirection"),position:get("newMovePosition"),support:get("newMoveSupport"),link:get("newMoveLink"),cue:get("newMoveCue"),source:"教师录入",teacherConfirmed:false,createdAt:new Date().toISOString()});localStorage.setItem("wb_custom",JSON.stringify(custom));renderTeacher();["newMoveName","newMoveTime","newMoveParts","newMoveDirection","newMovePosition","newMoveSupport","newMoveLink","newMoveCue"].forEach(id=>document.getElementById(id).value="");}
+function renderTeacher(){document.getElementById("teacherEntries").innerHTML=custom.length?custom.map((x,i)=>`<div class="move-card"><h3>${escapeHtml(x.name)} <span class="tag">${escapeHtml(x.time||"时间待补充")}</span></h3><p><b>动作部位：</b>${escapeHtml(x.parts||"待补充")}</p><p><b>方向路径：</b>${escapeHtml(x.direction||"待补充")}</p><p><b>位置要求：</b>${escapeHtml(x.position||"待补充")}</p><p><b>支撑与节奏：</b>${escapeHtml(x.support||"待补充")}</p><p><b>衔接与困难：</b>${escapeHtml(x.link||"待补充")}</p><p><b>教师口令/安全提示：</b>${escapeHtml(x.cue||"待补充")}</p><span class="tag">${x.teacherConfirmed?"教师已确认":"待教师确认"}</span> <button class="btn ghost" onclick="toggleTeacherConfirm(${i})">${x.teacherConfirmed?"取消确认":"标记教师已确认"}</button> <button class="btn ghost" onclick="deleteTeacherMove(${i})">删除</button></div>`).join(""):`暂时没有新增动作条目。`;}
+function toggleTeacherConfirm(i){custom[i].teacherConfirmed=!custom[i].teacherConfirmed;localStorage.setItem("wb_custom",JSON.stringify(custom));renderTeacher();}
+function deleteTeacherMove(i){if(!confirm("确定删除这条动作记录吗？"))return;custom.splice(i,1);localStorage.setItem("wb_custom",JSON.stringify(custom));renderTeacher();}
+function exportData(){let data={product:"舞伴智练",version:"1.3.0",course:document.getElementById("courseName").value,sourceVideoDuration:"132.838秒",segments,teacherConfirmed:custom.length>0&&custom.every(x=>x.teacherConfirmed),teacherEntries:custom,practiceCompleted:completed,feedbacks,transitionLogs,notice:"课程时间分段为初步视觉观察；动作标准、角度、左右、节拍和安全提示须教师确认。"};downloadFile(JSON.stringify(data,null,2),"舞伴智练_课程知识包.json","application/json;charset=utf-8");}
+function importData(event){const file=event.target.files?.[0];if(!file)return;const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);if(!Array.isArray(data.teacherEntries))throw new Error("缺少teacherEntries数组");custom=data.teacherEntries;localStorage.setItem("wb_custom",JSON.stringify(custom));if(data.course)document.getElementById("courseName").value=data.course;renderTeacher();alert("课程JSON导入成功。");}catch(e){alert("导入失败：请确认文件是舞伴智练导出的课程JSON。");}event.target.value="";};reader.readAsText(file);}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+renderMoves();renderPractice();renderTransitions();renderTopics();renderTeacher();renderWeeklyPlan();renderFeedbackLog();updateProgress();newQuiz();
+
+const aiConversation=[];
+function useAISuggestion(t){document.getElementById('aiQuestion').value=t;document.getElementById('aiQuestion').focus();}
+function appendAIMessage(role,text,label){const log=document.getElementById('aiChatLog');const b=document.createElement('div');b.className='bubble '+(role==='user'?'user':'bot');const body=document.createElement('div');body.textContent=text;b.appendChild(body);if(label){const s=document.createElement('div');s.className='small';s.style.marginTop='7px';s.textContent=label;b.appendChild(s);}log.appendChild(b);log.scrollTop=log.scrollHeight;}
+async function checkAIService(){const s=document.getElementById('aiStatus');try{const r=await fetch('/api/health');if(!r.ok)throw Error();const d=await r.json();s.textContent=d.ai_configured?'在线AI已配置。回答将结合项目知识库；动作技术标准仍需教师确认。':'后端已启动，但尚未配置在线大模型。当前使用本地知识模式。';}catch(e){s.textContent='当前以静态演示模式打开，尚未连接后端。启动项目服务后可使用知识检索；配置模型密钥后可启用在线AI。';}}
+async function sendAIMessage(){const input=document.getElementById('aiQuestion'),btn=document.getElementById('aiSendButton'),q=input.value.trim();if(!q)return;appendAIMessage('user',q);input.value='';btn.disabled=true;btn.textContent='正在思考……';aiConversation.push({role:'user',content:q});try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q,history:aiConversation.slice(-8)})});if(!r.ok)throw Error();const d=await r.json();appendAIMessage('assistant',d.answer,d.mode==='llm'?'在线AI · 已检索项目知识库':'本地知识模式 · 未连接在线大模型');aiConversation.push({role:'assistant',content:d.answer});}catch(e){const a=localKnowledgeAnswer(q);appendAIMessage('assistant',a,'本地示例模式 · 此答复不是在线大模型生成');aiConversation.push({role:'assistant',content:a});}finally{btn.disabled=false;btn.textContent='发送给AI舞伴';}}
+function localKnowledgeAnswer(q){if(/衔接|连接|连起来|忘/.test(q))return '把连接点单独练习：先分别回忆前一个动作的结束姿态和后一个动作的启动方式，再慢速练习中间的重心转移、方向变化和身体路径。连续顺畅后再恢复音乐速度。请记录卡住的时间点，并请教师确认动作顺序与拍点。';if(/重心|平衡/.test(q))return '观察重心时留意支撑脚、膝髋关系、躯干方向和身体重量转移。不要为了某种造型强行压迫关节；出现疼痛或明显不适时应停止并向教师反馈。';if(/空间|方向|左右|镜像/.test(q))return '空间观察可以从身体方向、移动路径、高低层次和延伸范围入手。镜面教学要区分舞者自身左右与镜像左右，请教师明确学员应跟随哪一侧。';if(/力度|时间|节奏|音乐|拍/.test(q))return '观察动作的快慢、停顿、延长、轻重和连续性，再尝试与音乐节拍、重音或乐句对应。当前课程样本没有经过教师逐拍标注，不要猜测具体拍点。';return '我可以围绕身体与动作、空间与方向、时间与节奏、力度、重心、动作衔接和艺术表达提供基础提示。精确动作名称、左右、角度或音乐拍点需要教师确认。';}
+
+document.getElementById('aiQuestion')?.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendAIMessage();}});checkAIService();
+
+// V1.4 local visual workflow. No third-party upload or cloud storage is used.
+let visionCourseId=null, referenceJobId=null, practiceJobId=null, lastComparison=null, teacherCourseCache=[];
+const visionApi = async (url, options={}) => {
+  const response = await fetch(url, options);
+  let data={}; try { data=await response.json(); } catch(e) {}
+  if(!response.ok) throw new Error(data.detail || data.message || `请求失败（${response.status}）`);
+  return data;
+};
+const setVisionStatus=(id,text)=>{const el=document.getElementById(id);if(el)el.textContent=text;};
+const setVisionProgress=(id,value)=>{const el=document.getElementById(id);if(el)el.style.width=`${Math.max(0,Math.min(100,value||0))}%`;};
+const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+async function waitVisionJob(jobId,statusId,progressId){
+  for(let i=0;i<600;i++){
+    const job=await visionApi(`/api/vision/jobs/${jobId}`);
+    setVisionStatus(statusId,`${job.message||job.status}\n状态：${job.status} · 进度：${job.progress||0}%`);
+    setVisionProgress(progressId,job.progress||0);
+    if(job.status==='succeeded')return job;
+    if(job.status==='failed')throw new Error(job.error||'视频分析失败');
+    await sleep(1200);
+  }
+  throw new Error('分析时间较长，请稍后刷新页面查看；不要重复上传同一视频。');
+}
+async function createCourseAndAnalyze(){
+  const title=document.getElementById('visionCourseTitle').value.trim();
+  const style=document.getElementById('visionDanceStyle').value;
+  const file=document.getElementById('referenceFile').files[0];
+  const consent=document.getElementById('referenceConsent').checked;
+  if(!title){alert('请填写课程名称。');return;}
+  if(!file){alert('请先选择教师标准视频。');return;}
+  if(!consent){alert('请先确认视频授权与本机分析用途。');return;}
+  const btn=document.getElementById('referenceUploadBtn');btn.disabled=true;
+  document.getElementById('referenceResult').classList.add('hidden');
+  setVisionProgress('referenceProgress',2);
+  try{
+    const health=await visionApi('/api/health');
+    if(!health.vision_ready)throw new Error('视觉环境尚未就绪。请确认Python 3.12依赖安装完成，且姿态模型已下载；可先重新运行start_windows.bat。');
+    const course=await visionApi('/api/courses',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title,dance_style:style})});
+    visionCourseId=course.course_id;
+    await refreshTeacherCourses();
+    const form=new FormData();form.append('file',file);form.append('course_id',visionCourseId);form.append('consent_confirmed','true');
+    setVisionStatus('referenceStatus','课程已创建，正在上传标准示范视频……');
+    const queued=await visionApi('/api/vision/analyze',{method:'POST',body:form});referenceJobId=queued.job_id;
+    const job=await waitVisionJob(referenceJobId,'referenceStatus','referenceProgress');
+    document.getElementById('referenceResult').classList.remove('hidden');
+    document.getElementById('referenceDetected').textContent=job.summary.detected_frames;
+    document.getElementById('referenceRate').textContent=Math.round(job.summary.detection_rate*100)+'%';
+    document.getElementById('referenceSampled').textContent=job.summary.sampled_frames;
+    document.getElementById('referenceInterpretation').textContent=job.summary.interpretation+' 以上比例仅表示抽样帧中检测到人体姿态的比例，不是舞蹈动作得分。';
+    document.getElementById('referenceOriginalVideo').src=`/api/vision/jobs/${referenceJobId}/video`;
+    document.getElementById('referenceContactSheet').src=`/api/vision/jobs/${referenceJobId}/contact-sheet?t=${Date.now()}`;
+    document.getElementById('referenceJsonLink').href=`/api/vision/jobs/${referenceJobId}/data`;
+    document.getElementById('referencePreviewLink').href=`/api/vision/jobs/${referenceJobId}/preview`;
+    document.getElementById('segmentEditor').classList.remove('hidden');
+    document.getElementById('segmentStart').value='0';
+    document.getElementById('segmentEnd').value=Math.min(5,Math.floor(job.summary.duration_seconds*10)/10).toFixed(1);
+    setVisionStatus('referenceStatus','识别完成。请查看骨架预览，并由教师手动划分、命名和审核动作片段。');
+    await loadTeacherSegments();
+  }catch(e){setVisionStatus('referenceStatus','操作失败：'+e.message);}
+  finally{btn.disabled=false;}
+}
+function setSegmentTime(which){
+  const video=document.getElementById('referenceOriginalVideo');
+  if(!video||!Number.isFinite(video.currentTime)){alert('请先上传并播放标准示范视频。');return;}
+  document.getElementById(which==='start'?'segmentStart':'segmentEnd').value=video.currentTime.toFixed(1);
+}
+async function saveVisionSegment(){
+  if(!visionCourseId||!referenceJobId){alert('请先完成标准视频识别。');return;}
+  const title=document.getElementById('segmentTitle').value.trim();
+  const start=Number(document.getElementById('segmentStart').value),end=Number(document.getElementById('segmentEnd').value);
+  const notes=document.getElementById('segmentNotes').value.trim();
+  if(!title){alert('请填写动作片段名称。');return;}
+  if(!Number.isFinite(start)||!Number.isFinite(end)||start<0||end<=start){alert('请检查片段起止时间，结束时间必须大于开始时间。');return;}
+  try{
+    await visionApi(`/api/courses/${visionCourseId}/segments`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reference_job_id:referenceJobId,title,start_ms:Math.round(start*1000),end_ms:Math.round(end*1000),teacher_notes:notes})});
+    document.getElementById('segmentTitle').value='';document.getElementById('segmentNotes').value='';
+    setVisionStatus('referenceStatus','动作片段已保存，当前状态为“待教师审核”。请在下方点击教师确认。');
+    await loadTeacherSegments();
+  }catch(e){setVisionStatus('referenceStatus','保存片段失败：'+e.message);}
+}
+async function loadTeacherSegments(){
+  if(!visionCourseId)return;
+  try{
+    const data=await visionApi('/api/courses');teacherCourseCache=data.courses||[];
+    const course=teacherCourseCache.find(x=>x.course_id===visionCourseId);
+    const el=document.getElementById('visionSegmentList');
+    if(!course||!course.segments.length){el.textContent='还没有动作片段。可播放上方标准视频，设置起止时间后添加片段。';return;}
+    el.innerHTML=course.segments.map(s=>`<div class="vision-segment"><b>${escapeHtml(s.title)}</b> <span class="tag">${(s.start_ms/1000).toFixed(1)}s—${(s.end_ms/1000).toFixed(1)}s</span><p>${escapeHtml(s.teacher_notes||'教师尚未填写动作讲解')}</p><p>状态：${s.approved?'教师已确认':'待教师确认'}</p><div class="vision-actions">${s.approved?'':'<button class="btn secondary" onclick="approveVisionSegment(\''+s.segment_id+'\')">教师确认该片段</button>'}</div></div>`).join('');
+  }catch(e){setVisionStatus('referenceStatus','读取课程片段失败：'+e.message);}
+}
+async function approveVisionSegment(segmentId){
+  try{await visionApi(`/api/courses/${visionCourseId}/segments/${segmentId}`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({approved:true})});await loadTeacherSegments();await refreshPracticeCourses();}
+  catch(e){setVisionStatus('referenceStatus','审核失败：'+e.message);}
+}
+async function publishVisionCourse(){
+  if(!visionCourseId){alert('请先创建课程并完成标准视频识别。');return;}
+  try{const r=await visionApi(`/api/courses/${visionCourseId}/publish`,{method:'POST'});setVisionStatus('referenceStatus',r.message);await refreshPracticeCourses();}
+  catch(e){setVisionStatus('referenceStatus','发布失败：'+e.message);}
+}
+async function deleteVisionCourse(){
+  if(!visionCourseId){alert('当前没有可删除的课程。');return;}
+  if(!confirm('确定删除本课程、关联的教师视频、学员练习视频和分析结果吗？此操作不可撤销。'))return;
+  try{await visionApi(`/api/courses/${visionCourseId}`,{method:'DELETE'});visionCourseId=null;referenceJobId=null;practiceJobId=null;document.getElementById('referenceResult').classList.add('hidden');document.getElementById('segmentEditor').classList.add('hidden');document.getElementById('referenceOriginalVideo').removeAttribute('src');document.getElementById('comparisonResult').classList.add('hidden');setVisionStatus('referenceStatus','课程及关联视频已删除。');await refreshTeacherCourses();await refreshPracticeCourses();}
+  catch(e){setVisionStatus('referenceStatus','删除失败：'+e.message);}
+}
+async function refreshTeacherCourses(){
+  const select=document.getElementById('teacherCourseSelect');
+  try{
+    const data=await visionApi('/api/courses');teacherCourseCache=data.courses||[];
+    select.innerHTML=teacherCourseCache.length?teacherCourseCache.map(c=>`<option value="${c.course_id}">${escapeHtml(c.title)} · ${c.status==='published'?'已发布':'草稿'}</option>`).join(''):'<option value="">暂无课程</option>';
+    if(visionCourseId&&teacherCourseCache.some(c=>c.course_id===visionCourseId))select.value=visionCourseId;
+    select.onchange=()=>loadTeacherCourse(select.value);
+    if(!visionCourseId&&teacherCourseCache.length){select.value=teacherCourseCache[0].course_id;await loadTeacherCourse(select.value);}
+  }catch(e){select.innerHTML='<option value="">无法读取课程列表</option>';}
+}
+async function loadTeacherCourse(courseId){
+  if(!courseId){visionCourseId=null;referenceJobId=null;return;}
+  visionCourseId=courseId;
+  const course=teacherCourseCache.find(c=>c.course_id===courseId);
+  if(!course)return;
+  document.getElementById('visionCourseTitle').value=course.title;
+  document.getElementById('visionDanceStyle').value=course.dance_style||'现代舞';
+  const ref=(course.reference_jobs||[]).find(j=>j.status==='succeeded');
+  if(ref){
+    referenceJobId=ref.job_id;
+    const job=await visionApi(`/api/vision/jobs/${referenceJobId}`);
+    if(job.status==='succeeded'){
+      document.getElementById('referenceResult').classList.remove('hidden');
+      document.getElementById('referenceDetected').textContent=job.summary.detected_frames;
+      document.getElementById('referenceRate').textContent=Math.round(job.summary.detection_rate*100)+'%';
+      document.getElementById('referenceSampled').textContent=job.summary.sampled_frames;
+      document.getElementById('referenceInterpretation').textContent=job.summary.interpretation+' 以上比例不是舞蹈动作得分。';
+      document.getElementById('referenceOriginalVideo').src=`/api/vision/jobs/${referenceJobId}/video`;
+      document.getElementById('referenceContactSheet').src=`/api/vision/jobs/${referenceJobId}/contact-sheet?t=${Date.now()}`;
+      document.getElementById('referenceJsonLink').href=`/api/vision/jobs/${referenceJobId}/data`;
+      document.getElementById('referencePreviewLink').href=`/api/vision/jobs/${referenceJobId}/preview`;
+      document.getElementById('segmentEditor').classList.remove('hidden');
+      setVisionStatus('referenceStatus',`已载入课程“${course.title}”及其标准视频。可继续添加动作片段或审核现有片段。`);
+    }
+  }else{
+    referenceJobId=null;document.getElementById('referenceResult').classList.add('hidden');document.getElementById('segmentEditor').classList.add('hidden');document.getElementById('referenceOriginalVideo').removeAttribute('src');
+    setVisionStatus('referenceStatus',`已选择课程“${course.title}”，但尚无成功的标准视频分析。可先重新上传教师标准视频。`);
+  }
+  await loadTeacherSegments();
+}
+async function refreshPracticeCourses(){
+  const select=document.getElementById('practiceCourse');
+  try{
+    const data=await visionApi('/api/courses?published_only=true');
+    const courses=data.courses||[];
+    select.innerHTML=courses.length?courses.map(c=>`<option value="${c.course_id}">${escapeHtml(c.title)}</option>`).join(''):'<option value="">暂无已发布课程</option>';
+    select.onchange=()=>renderPracticeSegments(courses);
+    renderPracticeSegments(courses);
+  }catch(e){select.innerHTML='<option value="">无法读取课程列表</option>';}
+}
+function renderPracticeSegments(courses){
+  const courseId=document.getElementById('practiceCourse').value;
+  const course=(courses||[]).find(c=>c.course_id===courseId);
+  const segments=(course?.segments||[]).filter(s=>s.approved);
+  const select=document.getElementById('practiceSegment');
+  select.innerHTML=segments.length?segments.map(s=>`<option value="${s.segment_id}">${escapeHtml(s.title)}（${(s.start_ms/1000).toFixed(1)}—${(s.end_ms/1000).toFixed(1)}秒）</option>`).join(''):'<option value="">该课程暂无已审核片段</option>';
+}
+async function uploadPracticeVideo(){
+  const courseId=document.getElementById('practiceCourse').value;
+  const segmentId=document.getElementById('practiceSegment').value;
+  const file=document.getElementById('practiceFile').files[0];
+  const alias=document.getElementById('studentAlias').value.trim()||'学员';
+  if(!courseId||!segmentId){alert('请先选择已发布课程和已审核片段。');return;}
+  if(!file){alert('请先选择个人练习视频。');return;}
+  if(!document.getElementById('practiceConsent').checked){alert('请先确认视频授权与本机分析用途。');return;}
+  const btn=document.getElementById('practiceUploadBtn');btn.disabled=true;document.getElementById('comparisonResult').classList.add('hidden');setVisionProgress('practiceProgress',2);
+  try{
+    const form=new FormData();form.append('file',file);form.append('course_id',courseId);form.append('segment_id',segmentId);form.append('student_alias',alias);form.append('consent_confirmed','true');
+    setVisionStatus('practiceStatus','正在上传学员练习视频……');
+    const queued=await visionApi('/api/student/practices',{method:'POST',body:form});practiceJobId=queued.job_id;
+    const job=await waitVisionJob(practiceJobId,'practiceStatus','practiceProgress');
+    const comparison=await visionApi('/api/student/comparisons',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({course_id:courseId,segment_id:segmentId,practice_job_id:practiceJobId})});
+    lastComparison=comparison;
+    document.getElementById('compareReferenceRate').textContent=Math.round(comparison.reference_summary.detection_rate*100)+'%';
+    document.getElementById('comparePracticeRate').textContent=Math.round(comparison.practice_summary.detection_rate*100)+'%';
+    document.getElementById('compareDuration').textContent=job.summary.duration_seconds+'秒';
+    const refVideo=document.getElementById('compareReferenceVideo');
+    refVideo.src=comparison.reference_video_url;
+    refVideo.onloadedmetadata=()=>{refVideo.currentTime=(comparison.segment_start_ms||0)/1000;};
+    refVideo.ontimeupdate=()=>{if(comparison.segment_end_ms>0 && refVideo.currentTime>=comparison.segment_end_ms/1000){refVideo.pause();refVideo.currentTime=comparison.segment_start_ms/1000;}};
+    document.getElementById('comparePracticeVideo').src=comparison.practice_video_url;
+    document.getElementById('compareReferenceSheet').src=comparison.reference_contact_sheet_url+'?t='+Date.now();
+    document.getElementById('comparePracticeSheet').src=comparison.practice_contact_sheet_url+'?t='+Date.now();
+    document.getElementById('comparisonNote').textContent=comparison.note;
+    document.getElementById('practiceJsonLink').href=`/api/vision/jobs/${practiceJobId}/data`;
+    document.getElementById('comparisonResult').classList.remove('hidden');
+    setVisionStatus('practiceStatus','学员视频分析完成。可并排播放两段视频，结合骨架预览进行观察。');
+  }catch(e){setVisionStatus('practiceStatus','操作失败：'+e.message);}
+  finally{btn.disabled=false;}
+}
+async function deletePracticeJob(){
+  if(!practiceJobId)return;
+  if(!confirm('确定删除本次学员练习视频和分析结果吗？'))return;
+  try{await visionApi(`/api/vision/jobs/${practiceJobId}`,{method:'DELETE'});practiceJobId=null;lastComparison=null;document.getElementById('comparisonResult').classList.add('hidden');document.getElementById('compareReferenceVideo').removeAttribute('src');document.getElementById('comparePracticeVideo').removeAttribute('src');setVisionStatus('practiceStatus','本次练习视频和分析结果已删除。');}
+  catch(e){setVisionStatus('practiceStatus','删除失败：'+e.message);}
+}
+refreshTeacherCourses();
+refreshPracticeCourses();
+
+</script>
+<script>if("serviceWorker" in navigator && location.protocol.startsWith("http")){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
+</body></html>

@@ -1,0 +1,27 @@
+.intro .go-btn { margin-top: 24rpx; width: 100%; }
+
+.section-title { margin: 8rpx 0 20rpx; }
+
+.status {
+  font-size: 24rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 999rpx;
+  white-space: nowrap;
+}
+.status.ok { background: #E6F4EA; color: #2E7D54; }
+.status.bad { background: #FDECEA; color: #C0392B; }
+.status.wait { background: #FFF4E5; color: #A05A00; }
+
+.rec-title { font-size: 34rpx; font-weight: 600; }
+.rec-seg, .rec-time { margin-top: 8rpx; }
+.rec-error {
+  margin-top: 16rpx;
+  background: #FDECEA;
+  color: #C0392B;
+  padding: 16rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+.rec-actions { display: flex; gap: 16rpx; margin-top: 20rpx; }
+.btn.small { flex: 1; min-height: 80rpx; font-size: 30rpx; }
+.note-card { margin-top: 8rpx; }

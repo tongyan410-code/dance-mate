@@ -1,0 +1,59 @@
+<view class="page">
+  <view class="card hero">
+    <view class="title-lg">舞伴智练</view>
+    <view class="text-sub hero-sub">AI 把动作看清楚，练习有人回应</view>
+    <view wx:if="{{alias}}" class="hello">你好，{{alias}}</view>
+  </view>
+
+  <view wx:if="{{!alias}}" class="notice">
+    还没设置昵称。点下面「我的」填一下昵称，就能开始练习了。
+  </view>
+
+  <view class="card">
+    <view class="between">
+      <view>
+        <view class="title-md">服务器状态</view>
+        <view class="text-sub server-url">{{server}}</view>
+      </view>
+      <view class="status {{health && health.ok ? 'ok' : 'bad'}}">
+        {{checked ? (health && health.ok ? '已连接' : '未连接') : '检查中'}}
+      </view>
+    </view>
+    <view wx:if="{{checked && !health}}" class="text-sub tip">
+      连不上服务器。请在「我的 → 服务器设置」检查地址，并确认服务端已开启。
+    </view>
+    <view wx:if="{{health && !health.vision_ready}}" class="text-sub tip">
+      服务端还没装好姿态识别模型，暂时看不了动作对照；课程和 AI 问答仍可用。
+    </view>
+  </view>
+
+  <view class="title-md section-title">你想做什么？</view>
+
+  <view class="grid">
+    <view class="entry" bindtap="goTab" data-url="/pages/courses/courses">
+      <view class="entry-icon">📚</view>
+      <view class="entry-title">看课程</view>
+      <view class="entry-desc">分段学动作</view>
+    </view>
+    <view class="entry" bindtap="goTab" data-url="/pages/practice/practice">
+      <view class="entry-icon">🎬</view>
+      <view class="entry-title">去练习</view>
+      <view class="entry-desc">录视频对照</view>
+    </view>
+    <view class="entry" bindtap="goPage" data-url="/pages/chat/chat">
+      <view class="entry-icon">💬</view>
+      <view class="entry-title">AI 陪伴</view>
+      <view class="entry-desc">问答与鼓励</view>
+    </view>
+    <view class="entry" bindtap="goPage" data-url="/pages/records/records">
+      <view class="entry-icon">📖</view>
+      <view class="entry-title">学习记录</view>
+      <view class="entry-desc">回看进步</view>
+    </view>
+  </view>
+
+  <view class="card footer-note">
+    <view class="text-sub">使用提醒</view>
+    <view class="text-sub">录制时请固定手机、全身入镜；教师示范和你的练习尽量用同样的方向和机位。</view>
+  </view>
+</view>

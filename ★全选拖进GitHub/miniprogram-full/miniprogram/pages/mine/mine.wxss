@@ -1,0 +1,30 @@
+.profile { display: flex; align-items: center; gap: 24rpx; }
+.avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  background: #EEF4FA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+}
+.server-url { word-break: break-all; margin-top: 6rpx; }
+
+.list { padding: 8rpx 28rpx; }
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100rpx;
+  border-bottom: 2rpx solid #EEF2F5;
+  padding: 16rpx 0;
+}
+.item:last-child { border-bottom: none; }
+.item-title { font-size: 32rpx; }
+.item-left { flex: 1; }
+.item-arrow { font-size: 44rpx; color: #90A4AE; margin-left: 16rpx; }
+.danger { color: #C0392B; }
+
+.section-title { margin: 8rpx 0 20rpx; }
+.version { text-align: center; margin-top: 32rpx; font-size: 26rpx; }

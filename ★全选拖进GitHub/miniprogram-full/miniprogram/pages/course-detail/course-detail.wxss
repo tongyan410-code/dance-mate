@@ -1,0 +1,27 @@
+.course-head .notice.inline { margin-top: 20rpx; margin-bottom: 0; }
+
+.segment { padding-bottom: 20rpx; }
+.time-tag {
+  background: #EEF4FA;
+  color: #2B6CB0;
+  font-size: 24rpx;
+  padding: 6rpx 14rpx;
+  border-radius: 8rpx;
+  white-space: nowrap;
+}
+.poster {
+  width: 100%;
+  margin-top: 16rpx;
+  border-radius: 10rpx;
+  background: #ECEFF1;
+}
+.notes {
+  margin-top: 16rpx;
+  background: #F5F9FD;
+  border-radius: 10rpx;
+  padding: 20rpx;
+}
+.notes-label { color: #2B6CB0; font-size: 26rpx; font-weight: 600; }
+.notes-body { margin-top: 8rpx; font-size: 30rpx; line-height: 1.7; }
+.notes-empty { margin-top: 16rpx; }
+.practice-btn { margin-top: 24rpx; width: 100%; }
