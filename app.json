@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/courses/courses",
+    "pages/practice/practice",
+    "pages/mine/mine",
+    "pages/course-detail/course-detail",
+    "pages/compare/compare",
+    "pages/chat/chat",
+    "pages/records/records"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#7651B7",
+    "navigationBarTitleText": "舞伴智练",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#FBF8FF",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "color": "#7A8896",
+    "selectedColor": "#7651B7",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/courses/courses",
+        "text": "课程"
+      },
+      {
+        "pagePath": "pages/practice/practice",
+        "text": "练习"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
